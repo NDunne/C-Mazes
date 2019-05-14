@@ -1,9 +1,11 @@
 #pragma once
 
-#include <string>
-
 #include "SDL.h"
-#include "MazeNode.h"
+#include "MazeAdj.h"
+
+#include <vector>
+#include <random>
+#include <ctime>
 
 class Maze
 {
@@ -29,7 +31,18 @@ private:
 	Uint32 grey;
 	Uint32 white;
 
+	const static int X_NODES = X_CELLS - 2;
+	const static int Y_NODES = Y_CELLS - 2;
+	
+	bool isValid(NodeCoord n);
+
+	void Prims();
+	void drawCell(int x, int y, Maze::cellType type);
+
 	//x:[y:[]]
 	cellType cells[X_CELLS][Y_CELLS];
+
+	MazeAdj allEdges;
+	MazeAdj mazeEdges;
 };
 
