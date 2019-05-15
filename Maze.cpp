@@ -40,23 +40,24 @@ void Maze::Prims()
 		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(SOUTH)->toString();
 	}
 
+	MazeNode* n;
 	if (rand() % 2)
 	{
-		edges.push_back({ end, end->adjNode(NORTH) });
-		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(EAST)->toString();
+		n = end->adjNode(NORTH);
 	}
 	else
 	{
-		edges.push_back({ end, end->adjNode(WEST) });
-		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(SOUTH)->toString();
+		n = end->adjNode(WEST);
 	}
+	mazeEdges.addEdge(end, n, 1);
+	drawCell(n, UNVISITED);
 	
 	while (!edges.empty())
 	{
 		int currentIndex = rand() % edges.size();
 		NodePair currentEdge = edges[currentIndex];
 
-		//LOG std::cout << "\ncurrentEdge: " << currentEdge.first->toString() << " -> " << currentEdge.second->toString();
+		std::cout << "\ncurrentEdge: " << currentEdge.first->toString() << " -> " << currentEdge.second->toString();
 
 		if (!mazeEdges.DFS(currentEdge.first, currentEdge.second, true))
 		{

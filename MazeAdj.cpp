@@ -81,12 +81,25 @@ bool MazeAdj::DFS(MazeNode* start, MazeNode* search, bool checkAdjacent)
 		if (!checkAdjacent && currentNode->equals(search)) return true;
 		else if (checkAdjacent && currentNode->nequals(start))
 		{
-			//LOG std::cout << "\nchecking adjacent of " << search->toString() << " for " << currentNode->toString();
-			for (int dir = NORTH; dir != END; dir++)
+			
+			MazeNode* adj1;
+			MazeNode* adj2;
+			if (search->x == currentNode->x)
 			{
-				direction e_dir = (direction) dir;
-				MazeNode* adj = search->adjNode(e_dir);
-				if (adj != nullptr && adj->equals(currentNode))
+				std::cout << "\nchecking y adjacent of " << search->toString() << " for " << currentNode->toString();
+				adj1 = search->adjNode(NORTH);
+				adj2 = search->adjNode(SOUTH);
+				if ((adj1 != nullptr && adj1->equals(currentNode)) || (adj2 != nullptr && adj2->equals(currentNode)))
+				{
+					return true;
+				}
+			}
+			else if (search->y == currentNode->y)
+			{ 
+				std::cout << "\nchecking X adjacent of " << search->toString() << " for " << currentNode->toString();
+				adj1 = search->adjNode(EAST);
+				adj2 = search->adjNode(WEST);
+				if ((adj1 != nullptr && adj1->equals(currentNode)) || (adj2 != nullptr && adj2->equals(currentNode)))
 				{
 					return true;
 				}
