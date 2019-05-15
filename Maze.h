@@ -10,16 +10,12 @@
 class Maze
 {
 public:
-	const static int X_CELLS = 45;
-	const static int Y_CELLS = 45;
-
-	const static int boxLen = 2;
+	const static int boxLen = 10;
 	const static int boxPad = 1;
 
-	enum cellType { WALL, UNVISITED, VISITED };
+	enum cellType { WALL, UNVISITED, VISITED, SPECIAL };
 
 	Maze(SDL_Window* w, SDL_Surface* s);
-	~Maze();
 
 	void draw();
 
@@ -30,18 +26,16 @@ private:
 	Uint32 black;
 	Uint32 grey;
 	Uint32 white;
-
-	const static int X_NODES = X_CELLS - 2;
-	const static int Y_NODES = Y_CELLS - 2;
+	Uint32 green;
 	
 	bool isValid(MazeNode A, MazeNode B);
 
 	void Prims();
-	void drawCell(MazeNode n, Maze::cellType type);
+	void drawCell(MazeNode* n, Maze::cellType type);
 	void drawCell(int x, int y, Maze::cellType type);
 
 	//x:[y:[]]
-	cellType cells[X_CELLS][Y_CELLS];
+	//cellType cells[X_CELLS][Y_CELLS];
 
 	MazeAdj allEdges;
 	MazeAdj mazeEdges;

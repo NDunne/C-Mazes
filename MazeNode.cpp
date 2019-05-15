@@ -17,20 +17,45 @@ MazeNode::MazeNode(NodeCoord n)
 	MazeNode::MazeNode(n.first, n.second);
 }
 
+std::string MazeNode::toString()
+{
+	std::string s = "(";
+	s += std::to_string(x);
+	s += ", ";
+	s += std::to_string(y);
+	s += ")";
+	return s;
+}
+
 //retuns a new MazeNode with co-ordinates in the required direction
 MazeNode* MazeNode::adjNode(direction d)
 {
 	switch (d)
 	{
 	case NORTH:
-		return new MazeNode (x, y + 1);
+		if ((y - 1) > 0)
+		{
+			return new MazeNode(x, y - 1);
+		}
 	case EAST:
-		return new MazeNode(x + 1, y);
+		if ((x + 1) < (X_NODES - 1))
+		{
+			return new MazeNode(x + 1, y);
+		}
 	case SOUTH:
-		return new MazeNode(x, y - 1);
+		if ((y + 1) < (Y_NODES - 1))
+		{
+			return new MazeNode(x, y + 1);
+		}
 	case WEST:
-		return new MazeNode(x - 1, y);
+		if ((x - 1) > 0)
+		{
+			return new MazeNode(x - 1, y);
+		}
 	}
+
+	////LOG std::cout << "\nOut of Bounds";
+	return nullptr;
 }
 
 //returns a std::pair<int,int> { x, y }
@@ -51,11 +76,20 @@ bool MazeNode::checkAdj(MazeNode check)
 
 bool MazeNode::operator== (MazeNode m)
 {
-	return (this->x == m.x) && (this->y == m.y);
+	return (x == m.x) && (y == m.y);
 }
 
 bool MazeNode::operator!= (MazeNode m)
 {
-	return (this->x != m.x) || (this->y != m.y);
+	return (x != m.x) || (y != m.y);
+}
+
+bool MazeNode::equals(MazeNode* m)
+{
+	return (x == m->x) && (y == m->y);
+}
+bool MazeNode::nequals(MazeNode* m)
+{
+	return (x != m->x) || (y != m->y);
 }
 

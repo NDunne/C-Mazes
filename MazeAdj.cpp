@@ -2,7 +2,7 @@
 
 void MazeAdj::addEdge(NodePair n, int w)
 {
-	MazeAdj::addEdge(&n.first, &n.second, w);
+	MazeAdj::addEdge(n.first, n.second, w);
 }
 
 void MazeAdj::addEdge(int x1, int y1, int x2, int y2, int w)
@@ -14,8 +14,8 @@ void MazeAdj::addEdge(int x1, int y1, int x2, int y2, int w)
 
 void MazeAdj::addEdge(MazeNode* A, MazeNode* B, int w)
 {
-	matrix[A->getPair()][B->getPair()] = { w ,false };
-	matrix[B->getPair()][A->getPair()] = { w, false };
+	matrix[A->getPair()][B->getPair()] = w;
+	matrix[B->getPair()][A->getPair()] = w;
 }
 
 NodeAdj MazeAdj::getNodeAdj(NodeCoord n)
@@ -44,9 +44,9 @@ adjacency::iterator MazeAdj::getEnd()
 	return matrix.end();
 }
 
-int MazeAdj::getEdge(MazeNode A, MazeNode B)
+int MazeAdj::getEdge(MazeNode* A, MazeNode* B)
 {
-	return matrix[A.getPair()][B.getPair()].weight;
+	return matrix[A->getPair()][B->getPair()];
 }
 
 int MazeAdj::getEdge(NodePair p)
@@ -54,45 +54,60 @@ int MazeAdj::getEdge(NodePair p)
 	return getEdge(p.first, p.second);
 }
 
-bool MazeAdj::DFS(MazeNode start, MazeNode search, bool checkAdjacent = false)
+bool MazeAdj::DFS(MazeNode* start, MazeNode* search, bool checkAdjacent)
 {
-	std::cout << "DFS: " << start.x << ", " << start.y << " -> " << search.x << ", " << search.y << "\n";
+	//LOG std::cout << "\nDFS: " << start->toString() << " -> " << search->toString();
+
+	bool queuedNodes[MazeNode::X_NODES][MazeNode::Y_NODES] = { false };
 
 	adjacency matrixCopy = matrix;
 	//Make a copy so visited values are only changed in the scope of this function
 
-	std::stack<MazeNode> stack;
+	std::stack<MazeNode*> stack;
 
 	stack.push(start);
-	//std::cout << "\n  push " << start.first << "," << start.second << "\n";
+	queuedNodes[start->x][start->y] = true;
+	////LOG std::cout << "\n  push " << start.first << "," << start.second << "\n";
 
 	while (!stack.empty())
 	{
-		//std::cout << "  stack size: " << stack.size() << "\n";
-		MazeNode current = stack.top();
+		////LOG std::cout << "  stack size: " << stack.size() << "\n";
+		MazeNode current = *stack.top();
+		MazeNode* currentNode = &current;
 		stack.pop();
-		//std::cout << "  current: " << current.first << "," << current.second << "\n";
-
-		//if this DFS is before adding the edges we need to DFS for all adjacent Cells that aren't the start.
-		if (!checkAdjacent && current == search) return true;
-		else if (checkAdjacent && current != start && )
+		//LOG std::cout << "\n  current: " << currentNode->toString();
 		
-		//Check Adjecent tiles to search to see if they are current, unless that adjacent tile is start
-
-		NodeAdj adj = matrixCopy[current.getPair()];
-
-		for (NodeAdj::iterator it = adj.begin(); it != adj.end(); it++)
+		//Check Adjacent tiles to search to see if they are current, unless that adjacent tile is start
+		if (!checkAdjacent && currentNode->equals(search)) return true;
+		else if (checkAdjacent && currentNode->nequals(start))
 		{
-
-			//std::cout << "\n check " << current.first << "," << current.second << " -> " << it->first.first << "," << it->first.second << " " << it->second.visited << "\n";
-			if (it->second.weight && !it->second.visited)
+			//LOG std::cout << "\nchecking adjacent of " << search->toString() << " for " << currentNode->toString();
+			for (int dir = NORTH; dir != END; dir++)
 			{
-				matrixCopy[current.getPair()][it->first].visited = true;
-				matrixCopy[it->first][current.getPair()].visited = true;
-				
-				MazeNode* stackItem = new MazeNode(it->first);
-				stack.push(*stackItem);
-				//std::cout << "-pushed-";
+				direction e_dir = (direction) dir;
+				MazeNode* adj = search->adjNode(e_dir);
+				if (adj != nullptr && adj->equals(currentNode))
+				{
+					return true;
+				}
+			}
+		}
+
+		//if not found push unchecked connected nodes for checking
+		
+		NodeAdj adjacentNodes = getNodeAdj(currentNode->getPair());
+
+		//it first  = NodeCoord of adjacent node
+		//it second = weight of edge (1 or 0);
+		for (NodeAdj::iterator it = adjacentNodes.begin(); it != adjacentNodes.end(); it++)
+		{
+			if (!queuedNodes[it->first.first][it->first.second] && it->second)
+			{
+				MazeNode* newNode = new MazeNode(it->first.first, it->first.second);
+				stack.push(newNode);
+				queuedNodes[it->first.first][it->first.second] = true;
+
+				//LOG std::cout << "\n   pushing: " << newNode->toString();
 			}
 		}
 	}

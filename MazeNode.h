@@ -11,9 +11,14 @@ enum direction { NORTH, EAST, SOUTH, WEST, END};
 class MazeNode
 {
 public:
+	const static int X_NODES = 15; //0 & 44 must be walls
+	const static int Y_NODES = 15; //0 & 44 must be walls
+
 	MazeNode();
 	MazeNode(int Xin, int Yin);
 	MazeNode(NodeCoord n);
+
+	std::string toString();
 
 	//retuns a new MazeNode with co-ordinates in the required direction
 	MazeNode* adjNode(direction d);
@@ -27,6 +32,9 @@ public:
 	//Node is equal
 	bool operator== (MazeNode m);
 	bool operator!= (MazeNode m);
+
+	bool equals(MazeNode* m);
+	bool nequals(MazeNode* m);
 
 	bool checkAdj(MazeNode check);
 };

@@ -9,26 +9,21 @@ Maze::Maze(SDL_Window* w, SDL_Surface* s)
 	black = SDL_MapRGB(surface->format, 0x0, 0x0, 0x0);
 	grey = SDL_MapRGB(surface->format, 0x30, 0x30, 0x30);
 	white = SDL_MapRGB(surface->format, 0xF0, 0xF0, 0xF0);
+	green = SDL_MapRGB(surface->format, 0x0, 0xF0, 0x0);
 
 	Prims();
 
-}
-
-bool Maze::isValid(MazeNode A, MazeNode B)
-{
-	bool inBounds = (B.x > 0 && B.x < (X_CELLS-1) && B.y > 0 && B.y < (Y_CELLS-1));
-	bool notYetEdge = (mazeEdges.getEdge(A, B) == 0);
-
-	return inBounds && notYetEdge;
 }
 
 void Maze::Prims()
 {
 
 	draw();
-	MazeNode start = { 1, 1 };
+	MazeNode* start = new MazeNode(1, 1);
+	MazeNode* end = new MazeNode(MazeNode::X_NODES - 2, MazeNode::Y_NODES - 2);
 
-	drawCell(start, UNVISITED);
+	drawCell(start, SPECIAL);
+	drawCell(end, SPECIAL);
 
 	std::vector<NodePair> edges;
 
@@ -36,45 +31,63 @@ void Maze::Prims()
 
 	if (rand() % 2)
 	{
-		edges.push_back({ start, {start.x, start.y + 1} });
+		edges.push_back({ start, start->adjNode(EAST) });
+		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(EAST)->toString();
 	}
 	else
 	{
-		edges.push_back({ start, {start.x+1, start.y} });
+		edges.push_back({ start, start->adjNode(SOUTH) });
+		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(SOUTH)->toString();
+	}
+
+	if (rand() % 2)
+	{
+		edges.push_back({ end, end->adjNode(NORTH) });
+		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(EAST)->toString();
+	}
+	else
+	{
+		edges.push_back({ end, end->adjNode(WEST) });
+		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(SOUTH)->toString();
 	}
 	
 	while (!edges.empty())
 	{
 		int currentIndex = rand() % edges.size();
-		NodePair current = edges[currentIndex];
-		
-		edges.erase(edges.begin() + currentIndex);
+		NodePair currentEdge = edges[currentIndex];
 
-		if (!mazeEdges.DFS(current.first, current.second))
+		//LOG std::cout << "\ncurrentEdge: " << currentEdge.first->toString() << " -> " << currentEdge.second->toString();
+
+		if (!mazeEdges.DFS(currentEdge.first, currentEdge.second, true))
 		{
-			std::cout << " no path\n";
-			mazeEdges.addEdge(current, 1);
+			//LOG std::cout << "\n no path";
+			mazeEdges.addEdge(currentEdge, 1);
 
-			MazeNode B = current.second;
+			MazeNode* B = currentEdge.second;
 
 			drawCell(B, UNVISITED);
+			SDL_Delay(10);
 
-			//for (int i = -1; i <= 1; i += 2)
-			int i = 1;
+			for (int dir = NORTH; dir != END; dir++)
 			{
-				MazeNode newNode = {current.second.x+i, current.second.y};
-				if (isValid(current.second, newNode)) edges.push_back({ current.second,newNode });
+				direction e_dir = (direction)dir;
 
-				newNode = { current.second.x, current.second.y+i };
-				if (isValid(current.second, newNode)) edges.push_back({ current.second,newNode });
+				MazeNode* newNode = B->adjNode(e_dir);
+				if (newNode != nullptr && !mazeEdges.getEdge(B,newNode))
+				{
+					edges.push_back({ B, newNode });
+					//LOG std::cout << "\n Maze edge queued: " << B->toString() << " -> " << newNode->toString();
+				}
 			}
 		}
+
+		edges.erase(edges.begin() + currentIndex);
 	}
 }
 
-void Maze::drawCell(MazeNode n, Maze::cellType type)
+void Maze::drawCell(MazeNode* n, Maze::cellType type)
 {
-	Maze::drawCell(n.x, n.y, type);
+	Maze::drawCell(n->x, n->y, type);
 }
 
 void Maze::drawCell(int x, int y, Maze::cellType type)
@@ -91,8 +104,11 @@ void Maze::drawCell(int x, int y, Maze::cellType type)
 	case VISITED:
 		colour = grey;
 		break;
-	default:
+	case WALL:
 		colour = black;
+		break;
+	default:
+		colour = green;
 		break;
 	}
 	SDL_FillRect(surface, &rect, colour);
@@ -103,44 +119,13 @@ void Maze::drawCell(int x, int y, Maze::cellType type)
 
 void Maze::draw()
 {	
-	for (int i = 0; i < X_CELLS; i++)
+	for (int i = 0; i < MazeNode::X_NODES; i++)
 	{
-		for (int j = 0; j < Y_CELLS; j++)
+		for (int j = 0; j < MazeNode::Y_NODES; j++)
 		{
 			drawCell(i, j, WALL);
 		}
 	}
-
-	/*for (auto it1 = mazeEdges.getStart(); it1 != mazeEdges.getEnd(); ++it1)
-	{
-		MazeNode A = it1->first;
-		NodeAdj a_adj = it1->second;
-
-		for (auto it2 = a_adj.begin(); it2 != a_adj.end(); ++it2)
-		{
-			MazeNode B = it2->first;
-
-			if (A.first == B.first)
-			{
-				for (int m = A.second; m <= B.second; m++)
-				{
-					drawCell(A.first, m, UNVISITED);
-					SDL_UpdateWindowSurface(window);
-					SDL_Delay(50);
-				}
-			}
-			else
-			{
-				for (int m = A.first; m <= B.first; m++)
-				{
-					drawCell(m, A.second, UNVISITED);
-					SDL_UpdateWindowSurface(window);
-					SDL_Delay(50);
-				}
-			}
-		}
-	}
-	*/
 
 	//Update the surface
 	SDL_UpdateWindowSurface(window);

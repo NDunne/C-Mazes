@@ -5,18 +5,12 @@
 
 #include "MazeNode.h"
 
-struct edge
-{
-	int weight;
-	bool visited;
-};
-
-using NodeAdj = std::map < NodeCoord, edge > ;
+using NodeAdj = std::map < NodeCoord, int > ;
 using adjacency = std::map< NodeCoord, NodeAdj >;
 
 //an adjacency: A:(Ax,Ay) -> (B:(Bx,By) -> w(A,B))
 
-using NodePair = std::pair<MazeNode, MazeNode>;
+using NodePair = std::pair<MazeNode*, MazeNode*>;
 
 class MazeAdj
 {
@@ -33,7 +27,7 @@ public:
 
 	//retrieve the edge weight from the matrix
 	int getEdge(NodePair p);
-	int getEdge(MazeNode A, MazeNode B);
+	int getEdge(MazeNode* A, MazeNode* B);
 
 	//retrieve map of Nodes to weights of their edge to the paramter MazeNode
 	NodeAdj getNodeAdj(MazeNode n);
@@ -43,7 +37,7 @@ public:
 	NodeAdj getNodeAdj(int x, int y);
 
 	//perform a Depth First Search from start to search on matrix
-	bool DFS(MazeNode start, MazeNode search, bool checkAdjacent = false);
+	bool DFS(MazeNode* start, MazeNode* search, bool checkAdjacent=false);
 
 private:
 	adjacency matrix;
