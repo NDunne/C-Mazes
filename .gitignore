@@ -334,5 +334,3 @@ ASALocalRun/
 
 #Project Files
 *.vcxproj*
-
-*/*.dll
