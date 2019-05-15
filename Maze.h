@@ -13,8 +13,8 @@ public:
 	const static int X_CELLS = 45;
 	const static int Y_CELLS = 45;
 
-	const static int boxLen = 10;
-	const static int boxPad = 2;
+	const static int boxLen = 2;
+	const static int boxPad = 1;
 
 	enum cellType { WALL, UNVISITED, VISITED };
 
@@ -37,6 +37,7 @@ private:
 	bool isValid(NodeCoord n);
 
 	void Prims();
+	void drawCell(NodeCoord n, Maze::cellType type);
 	void drawCell(int x, int y, Maze::cellType type);
 
 	//x:[y:[]]

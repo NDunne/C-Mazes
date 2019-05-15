@@ -4,8 +4,8 @@
 #include "MazeGenerator.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 550;
-const int SCREEN_HEIGHT = 550;
+const int SCREEN_WIDTH = 150; //550;
+const int SCREEN_HEIGHT = 150; //550;
 
 SDL_Window* initSDL()
 {
@@ -22,7 +22,7 @@ SDL_Window* initSDL()
 	{
 		//Create window
 		//Parameters: Name, xPos, yPos, xLen, yLen
-		window = SDL_CreateWindow("SDL MAZE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("SDL MAZE", 10, 10, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 
 	Maze* m1 = mazeGen->newMaze();
 
-	m1->draw();
+	//m1->draw();
 
 	bool quit = false;
 

@@ -35,7 +35,7 @@ Maze::Maze(SDL_Window* w, SDL_Surface* s)
 
 bool Maze::isValid(NodeCoord n)
 {
-	return (n.first > 0 && n.first < (X_CELLS - 1) && n.second > 0 && n.second < (Y_CELLS - 1));
+	return (n.first > 0 && n.first < (X_CELLS-1) && n.second > 0 && n.second < (Y_CELLS-1));
 }
 
 void Maze::Prims()
@@ -43,6 +43,8 @@ void Maze::Prims()
 
 	draw();
 	NodeCoord start = { 1, 1 };
+
+	drawCell(start, UNVISITED);
 
 	std::vector<NodePair> edges;
 
@@ -64,13 +66,13 @@ void Maze::Prims()
 		
 		edges.erase(edges.begin() + currentIndex);
 
-		if (!mazeEdges.DFS(current.first, current.second))
+		//if (!mazeEdges.DFS(current.first, current.second))
 		{
 			mazeEdges.addEdge(current, 1);
 
 			NodeCoord B = current.second;
 
-			drawCell(B.first - 1, B.second - 1, UNVISITED);
+			drawCell(B.first, B.second, UNVISITED);
 
 			for (int i = -1; i <= 1; i += 2)
 			{
@@ -82,6 +84,11 @@ void Maze::Prims()
 			}
 		}
 	}
+}
+
+void Maze::drawCell(NodeCoord n, Maze::cellType type)
+{
+	Maze::drawCell(n.first, n.second, type);
 }
 
 void Maze::drawCell(int x, int y, Maze::cellType type)
