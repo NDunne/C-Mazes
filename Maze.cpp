@@ -12,37 +12,21 @@ Maze::Maze(SDL_Window* w, SDL_Surface* s)
 
 	Prims();
 
-	//add edge to all adjacent cells
-
-	/*for (int x = 0; x < X_CELLS; x++)
-	{
-		for (int y = 0; y < Y_CELLS; y++)
-		{
-			if (!(x == 0 || y == 0 || x == (X_CELLS-1) || y == (Y_CELLS-1)))
-			{
-				if (x > 1)
-				{
-					allEdges.addEdge(x - 1, y, x, y, 1);
-				}
-				if (y > 1)
-				{
-					allEdges.addEdge(x, y - 1, x, y, 1);
-				}
-			}
-		}
-	}*/
 }
 
-bool Maze::isValid(NodeCoord n)
+bool Maze::isValid(MazeNode A, MazeNode B)
 {
-	return (n.first > 0 && n.first < (X_CELLS-1) && n.second > 0 && n.second < (Y_CELLS-1));
+	bool inBounds = (B.x > 0 && B.x < (X_CELLS-1) && B.y > 0 && B.y < (Y_CELLS-1));
+	bool notYetEdge = (mazeEdges.getEdge(A, B) == 0);
+
+	return inBounds && notYetEdge;
 }
 
 void Maze::Prims()
 {
 
 	draw();
-	NodeCoord start = { 1, 1 };
+	MazeNode start = { 1, 1 };
 
 	drawCell(start, UNVISITED);
 
@@ -52,11 +36,11 @@ void Maze::Prims()
 
 	if (rand() % 2)
 	{
-		edges.push_back({ start, {start.first, start.second + 1} });
+		edges.push_back({ start, {start.x, start.y + 1} });
 	}
 	else
 	{
-		edges.push_back({ start, {start.first+1, start.second} });
+		edges.push_back({ start, {start.x+1, start.y} });
 	}
 	
 	while (!edges.empty())
@@ -66,29 +50,31 @@ void Maze::Prims()
 		
 		edges.erase(edges.begin() + currentIndex);
 
-		//if (!mazeEdges.DFS(current.first, current.second))
+		if (!mazeEdges.DFS(current.first, current.second))
 		{
+			std::cout << " no path\n";
 			mazeEdges.addEdge(current, 1);
 
-			NodeCoord B = current.second;
+			MazeNode B = current.second;
 
-			drawCell(B.first, B.second, UNVISITED);
+			drawCell(B, UNVISITED);
 
-			for (int i = -1; i <= 1; i += 2)
+			//for (int i = -1; i <= 1; i += 2)
+			int i = 1;
 			{
-				NodeCoord newNode = {current.second.first+i, current.second.second};
-				if (isValid(newNode)) edges.push_back({ current.second,newNode });
+				MazeNode newNode = {current.second.x+i, current.second.y};
+				if (isValid(current.second, newNode)) edges.push_back({ current.second,newNode });
 
-				newNode = { current.second.first, current.second.second+i };
-				if (isValid(newNode)) edges.push_back({ current.second,newNode });
+				newNode = { current.second.x, current.second.y+i };
+				if (isValid(current.second, newNode)) edges.push_back({ current.second,newNode });
 			}
 		}
 	}
 }
 
-void Maze::drawCell(NodeCoord n, Maze::cellType type)
+void Maze::drawCell(MazeNode n, Maze::cellType type)
 {
-	Maze::drawCell(n.first, n.second, type);
+	Maze::drawCell(n.x, n.y, type);
 }
 
 void Maze::drawCell(int x, int y, Maze::cellType type)
@@ -127,12 +113,12 @@ void Maze::draw()
 
 	/*for (auto it1 = mazeEdges.getStart(); it1 != mazeEdges.getEnd(); ++it1)
 	{
-		NodeCoord A = it1->first;
+		MazeNode A = it1->first;
 		NodeAdj a_adj = it1->second;
 
 		for (auto it2 = a_adj.begin(); it2 != a_adj.end(); ++it2)
 		{
-			NodeCoord B = it2->first;
+			MazeNode B = it2->first;
 
 			if (A.first == B.first)
 			{

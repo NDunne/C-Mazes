@@ -1,40 +1,37 @@
 #include "MazeAdj.h"
 
-MazeAdj::MazeAdj()
-{
-}
-
-
-MazeAdj::~MazeAdj()
-{
-}
-
 void MazeAdj::addEdge(NodePair n, int w)
 {
-	addEdge(n.first, n.second, w);
+	MazeAdj::addEdge(&n.first, &n.second, w);
 }
 
 void MazeAdj::addEdge(int x1, int y1, int x2, int y2, int w)
 {
-	NodeCoord A = std::make_pair(x1, y1);
-	NodeCoord B = std::make_pair(x2, y2);
+	MazeNode* A = new MazeNode(x1, y1);
+	MazeNode* B = new MazeNode(x2, y2);
 	addEdge(A, B, w);
 }
 
-void MazeAdj::addEdge(NodeCoord A, NodeCoord B, int w)
+void MazeAdj::addEdge(MazeNode* A, MazeNode* B, int w)
 {
-	matrix[A][B] = { w ,false };
-	matrix[B][A] = { w, false };
+	matrix[A->getPair()][B->getPair()] = { w ,false };
+	matrix[B->getPair()][A->getPair()] = { w, false };
 }
 
-NodeAdj MazeAdj::getAdjacent(NodeCoord node)
+NodeAdj MazeAdj::getNodeAdj(NodeCoord n)
 {
-	return matrix[node];
+	return matrix[n];
 }
 
-NodeAdj MazeAdj::getAdjacent(int x, int y)
+NodeAdj MazeAdj::getNodeAdj(MazeNode n)
 {
-	return matrix[std::make_pair(x, y)];
+	return matrix[n.getPair()];
+}
+
+NodeAdj MazeAdj::getNodeAdj(int x, int y)
+{
+	MazeNode* A = new MazeNode(x, y);
+	return matrix[A->getPair()];
 }
 
 adjacency::iterator MazeAdj::getStart()
@@ -47,19 +44,24 @@ adjacency::iterator MazeAdj::getEnd()
 	return matrix.end();
 }
 
-std::string MazeAdj::NodeCoordToString(NodeCoord* n)
+int MazeAdj::getEdge(MazeNode A, MazeNode B)
 {
-	return (n->first + ":" + n->second);
+	return matrix[A.getPair()][B.getPair()].weight;
 }
 
-bool MazeAdj::DFS(NodeCoord start, NodeCoord search)
+int MazeAdj::getEdge(NodePair p)
 {
-	std::cout << "DFS: " << start.first << ", " << start.second << " -> " << search.first << ", " << search.second << "\n";
+	return getEdge(p.first, p.second);
+}
+
+bool MazeAdj::DFS(MazeNode start, MazeNode search, bool checkAdjacent = false)
+{
+	std::cout << "DFS: " << start.x << ", " << start.y << " -> " << search.x << ", " << search.y << "\n";
 
 	adjacency matrixCopy = matrix;
 	//Make a copy so visited values are only changed in the scope of this function
 
-	std::stack<NodeCoord> stack;
+	std::stack<MazeNode> stack;
 
 	stack.push(start);
 	//std::cout << "\n  push " << start.first << "," << start.second << "\n";
@@ -67,24 +69,29 @@ bool MazeAdj::DFS(NodeCoord start, NodeCoord search)
 	while (!stack.empty())
 	{
 		//std::cout << "  stack size: " << stack.size() << "\n";
-		NodeCoord current = stack.top();
-	
+		MazeNode current = stack.top();
+		stack.pop();
 		//std::cout << "  current: " << current.first << "," << current.second << "\n";
 
-		if (current == search) return true;
+		//if this DFS is before adding the edges we need to DFS for all adjacent Cells that aren't the start.
+		if (!checkAdjacent && current == search) return true;
+		else if (checkAdjacent && current != start && )
+		
+		//Check Adjecent tiles to search to see if they are current, unless that adjacent tile is start
 
-		stack.pop();
-		NodeAdj adj = matrixCopy[current];
+		NodeAdj adj = matrixCopy[current.getPair()];
 
 		for (NodeAdj::iterator it = adj.begin(); it != adj.end(); it++)
 		{
 
 			//std::cout << "\n check " << current.first << "," << current.second << " -> " << it->first.first << "," << it->first.second << " " << it->second.visited << "\n";
-			if (!it->second.visited)
+			if (it->second.weight && !it->second.visited)
 			{
-				matrixCopy[current][it->first].visited = true;
-				matrixCopy[it->first][current].visited = true;
-				stack.push(it->first);
+				matrixCopy[current.getPair()][it->first].visited = true;
+				matrixCopy[it->first][current.getPair()].visited = true;
+				
+				MazeNode* stackItem = new MazeNode(it->first);
+				stack.push(*stackItem);
 				//std::cout << "-pushed-";
 			}
 		}

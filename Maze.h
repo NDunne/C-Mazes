@@ -34,10 +34,10 @@ private:
 	const static int X_NODES = X_CELLS - 2;
 	const static int Y_NODES = Y_CELLS - 2;
 	
-	bool isValid(NodeCoord n);
+	bool isValid(MazeNode A, MazeNode B);
 
 	void Prims();
-	void drawCell(NodeCoord n, Maze::cellType type);
+	void drawCell(MazeNode n, Maze::cellType type);
 	void drawCell(int x, int y, Maze::cellType type);
 
 	//x:[y:[]]

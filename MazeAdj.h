@@ -1,46 +1,51 @@
 #pragma once
 
-#include <string>
-#include <map>
 #include <stack>
-#include <iterator>
+#include <map>
 
-#include <iostream>
+#include "MazeNode.h"
+
 struct edge
 {
 	int weight;
 	bool visited;
 };
 
-using NodeCoord = std::pair<int, int>;
-using NodeAdj = std::map< NodeCoord, edge>;
-using adjacency = std::map < NodeCoord, NodeAdj >;
+using NodeAdj = std::map < NodeCoord, edge > ;
+using adjacency = std::map< NodeCoord, NodeAdj >;
 
 //an adjacency: A:(Ax,Ay) -> (B:(Bx,By) -> w(A,B))
 
-using NodePair = std::pair<NodeCoord, NodeCoord>;
+using NodePair = std::pair<MazeNode, MazeNode>;
 
 class MazeAdj
 {
 public:
-	MazeAdj();
-	~MazeAdj();
-
 	void addEdge(NodePair n, int w);
-	void addEdge(NodeCoord A, NodeCoord B, int w);
+	void addEdge(MazeNode* A, MazeNode* B, int w);
 	void addEdge(int x1, int y1, int x2, int y2, int w);
 
-	NodeAdj getAdjacent(NodeCoord node);
-	NodeAdj getAdjacent(int x, int y);
-
+	//return start iterator
 	adjacency::iterator getStart();
+
+	//return end iterator
 	adjacency::iterator getEnd();
 
-	bool DFS(NodeCoord start, NodeCoord search);
+	//retrieve the edge weight from the matrix
+	int getEdge(NodePair p);
+	int getEdge(MazeNode A, MazeNode B);
+
+	//retrieve map of Nodes to weights of their edge to the paramter MazeNode
+	NodeAdj getNodeAdj(MazeNode n);
+	//retrieve map of Nodes to weights of their edge to the paramter NodeCoord
+	NodeAdj getNodeAdj(NodeCoord n);
+	//retrieve map of Nodes to weights of their edge to the paramter co-ordinates
+	NodeAdj getNodeAdj(int x, int y);
+
+	//perform a Depth First Search from start to search on matrix
+	bool DFS(MazeNode start, MazeNode search, bool checkAdjacent = false);
 
 private:
 	adjacency matrix;
-
-	std::string NodeCoordToString(NodeCoord* n);
 };
 
