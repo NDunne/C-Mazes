@@ -36,9 +36,6 @@ public:
 	//retrieve map of Nodes to weights of their edge to the paramter co-ordinates
 	NodeAdj getNodeAdj(int x, int y);
 
-	//perform a Depth First Search from start to search on matrix
-	bool DFS(MazeNode* start, MazeNode* search, bool checkAdjacent=false);
-
 private:
 	adjacency matrix;
 };

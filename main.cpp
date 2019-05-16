@@ -4,8 +4,8 @@
 #include "MazeGenerator.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 8 + MazeNode::X_NODES * (Maze::boxLen + Maze::boxPad); //550;
-const int SCREEN_HEIGHT = 8 + MazeNode::Y_NODES * (Maze::boxLen + Maze::boxPad);
+const int SCREEN_WIDTH = (8 * MazeNode::boxPad) + MazeNode::X_NODES * (MazeNode::boxLen + MazeNode::boxPad); //550;
+const int SCREEN_HEIGHT = (8 * MazeNode::boxPad) + MazeNode::Y_NODES * (MazeNode::boxLen + MazeNode::boxPad);
 
 SDL_Window* initSDL()
 {
@@ -48,9 +48,11 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 
-	Maze* m1 = mazeGen->newMaze();
+	Maze* m1 = mazeGen->newMaze(EASYPRIM);
 
-	//m1->draw();
+	SDL_Delay(5000);
+
+	Maze* m2 = mazeGen->newMaze(PRIM);
 
 	bool quit = false;
 

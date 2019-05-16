@@ -1,13 +1,15 @@
 #pragma once
 #include "PrimMaze.h"
 
+enum MazeType { PRIM, EASYPRIM };
+
 class MazeGenerator
 {
 public:
 	MazeGenerator(SDL_Window* sdlWin);
 	~MazeGenerator();
 
-	Maze* newMaze();
+	Maze* newMaze(MazeType t);
 
 	Maze* getMaze();
 

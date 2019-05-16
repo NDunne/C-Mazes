@@ -28,29 +28,29 @@ std::string MazeNode::toString()
 }
 
 //retuns a new MazeNode with co-ordinates in the required direction
-MazeNode* MazeNode::adjNode(direction d)
+MazeNode* MazeNode::adjNode(direction dir, int dist)
 {
-	switch (d)
+	switch (dir)
 	{
 	case NORTH:
-		if ((y - 1) > 0)
+		if ((y - dist) > 0)
 		{
-			return new MazeNode(x, y - 1);
+			return new MazeNode(x, y - dist);
 		}
 	case EAST:
-		if ((x + 1) < (X_NODES - 1))
+		if ((x + dist) < (X_NODES - 1))
 		{
-			return new MazeNode(x + 1, y);
+			return new MazeNode(x + dist, y);
 		}
 	case SOUTH:
-		if ((y + 1) < (Y_NODES - 1))
+		if ((y + dist) < (Y_NODES - 1))
 		{
-			return new MazeNode(x, y + 1);
+			return new MazeNode(x, y + dist);
 		}
 	case WEST:
-		if ((x - 1) > 0)
+		if ((x - dist) > 0)
 		{
-			return new MazeNode(x - 1, y);
+			return new MazeNode(x - dist, y);
 		}
 	}
 
@@ -62,16 +62,6 @@ MazeNode* MazeNode::adjNode(direction d)
 NodeCoord MazeNode::getPair()
 {
 	return { x, y };
-}
-
-bool MazeNode::checkAdj(MazeNode check)
-{
-	for (int dir = NORTH; dir += END; dir++)
-	{
-		MazeNode NB = *adjNode( (direction) dir );
-		if (NB == check) return true;
-	}
-	return false;
 }
 
 bool MazeNode::operator== (MazeNode m)
