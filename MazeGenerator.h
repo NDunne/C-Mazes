@@ -1,5 +1,5 @@
 #pragma once
-#include "Maze.h"
+#include "PrimMaze.h"
 
 class MazeGenerator
 {

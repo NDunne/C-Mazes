@@ -17,7 +17,7 @@ public:
 
 	Maze(SDL_Window* w, SDL_Surface* s);
 
-	void draw();
+	void drawBase();
 
 private:
 	SDL_Window* window;

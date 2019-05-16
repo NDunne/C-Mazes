@@ -1,5 +1,5 @@
 #include "MazeGenerator.h"
-#include "Maze.h"
+#include "PrimMaze.h"
 MazeGenerator::MazeGenerator(SDL_Window* sdlWin)
 {
 	window = sdlWin;

@@ -11,8 +11,8 @@ enum direction { NORTH, EAST, SOUTH, WEST, END};
 class MazeNode
 {
 public:
-	const static int X_NODES = 15; //0 & 44 must be walls
-	const static int Y_NODES = 15; //0 & 44 must be walls
+	const static int X_NODES = 11; //0 & 44 must be walls
+	const static int Y_NODES = 19; //0 & 44 must be walls
 
 	MazeNode();
 	MazeNode(int Xin, int Yin);

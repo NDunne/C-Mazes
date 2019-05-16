@@ -1,4 +1,4 @@
-#include "Maze.h"
+#include "PrimMaze.h"
 #include <iostream>
 
 Maze::Maze(SDL_Window* w, SDL_Surface* s)
@@ -18,9 +18,12 @@ Maze::Maze(SDL_Window* w, SDL_Surface* s)
 void Maze::Prims()
 {
 
-	draw();
+	drawBase();
 	MazeNode* start = new MazeNode(1, 1);
 	MazeNode* end = new MazeNode(MazeNode::X_NODES - 2, MazeNode::Y_NODES - 2);
+
+	MazeNode* endNorth = end->adjNode(NORTH);
+	MazeNode* endWest = end->adjNode(WEST);
 
 	drawCell(start, SPECIAL);
 	drawCell(end, SPECIAL);
@@ -39,18 +42,6 @@ void Maze::Prims()
 		edges.push_back({ start, start->adjNode(SOUTH) });
 		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(SOUTH)->toString();
 	}
-
-	MazeNode* n;
-	if (rand() % 2)
-	{
-		n = end->adjNode(NORTH);
-	}
-	else
-	{
-		n = end->adjNode(WEST);
-	}
-	mazeEdges.addEdge(end, n, 1);
-	drawCell(n, UNVISITED);
 	
 	while (!edges.empty())
 	{
@@ -65,6 +56,11 @@ void Maze::Prims()
 			mazeEdges.addEdge(currentEdge, 1);
 
 			MazeNode* B = currentEdge.second;
+
+			if (B->equals(endNorth) || B->equals(endWest))
+			{
+				mazeEdges.addEdge(B, end, 1);
+			}
 
 			drawCell(B, UNVISITED);
 			SDL_Delay(10);
@@ -118,7 +114,7 @@ void Maze::drawCell(int x, int y, Maze::cellType type)
 	SDL_UpdateWindowSurface(window);
 }
 
-void Maze::draw()
+void Maze::drawBase()
 {	
 	for (int i = 0; i < MazeNode::X_NODES; i++)
 	{
