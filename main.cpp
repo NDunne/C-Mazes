@@ -3,10 +3,6 @@
 
 #include "MazeGenerator.h"
 
-//Screen dimension constants
-const int SCREEN_WIDTH = (8 * MazeNode::boxPad) + MazeNode::X_NODES * (MazeNode::boxLen + MazeNode::boxPad); //550;
-const int SCREEN_HEIGHT = (8 * MazeNode::boxPad) + MazeNode::Y_NODES * (MazeNode::boxLen + MazeNode::boxPad);
-
 SDL_Window* initSDL()
 {
 	//The window we'll be rendering to
@@ -22,7 +18,8 @@ SDL_Window* initSDL()
 	{
 		//Create window
 		//Parameters: Name, xPos, yPos, xLen, yLen
-		window = SDL_CreateWindow("SDL MAZE", 10, 40, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("SDL MAZE", 10, 40, MAZE_PIXEL_WIDTH + (2*MAZE_PADDING), MAZE_PIXEL_HEIGHT + (2*MAZE_PADDING), SDL_WINDOW_SHOWN);
+		if (window == NULL)
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -46,13 +43,20 @@ int main(int argc, char** argv)
 {
 	SDL_Window* window = initSDL();
 
+	int width;
+	int height;
+
+	SDL_GetWindowSize(window, &width, &height);
+
+	std::cout << "window: " << std::to_string(width) << " by " << std::to_string(height);
+
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 
 	Maze* m1 = mazeGen->newMaze(EASYPRIM);
 
 	SDL_Delay(5000);
 
-	Maze* m2 = mazeGen->newMaze(PRIM);
+	Maze* m2 = mazeGen->newMaze(EASYPRIM);
 
 	bool quit = false;
 

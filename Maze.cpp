@@ -9,7 +9,18 @@ Maze::Maze(SDL_Window* w)
 	black = SDL_MapRGB(surface->format, 0x0, 0x0, 0x0);
 	grey = SDL_MapRGB(surface->format, 0x30, 0x30, 0x30);
 	white = SDL_MapRGB(surface->format, 0xF0, 0xF0, 0xF0);
-	green = SDL_MapRGB(surface->format, 0x0, 0xF0, 0x0);
+	green = SDL_MapRGB(surface->format, 0x0, 0xFF, 0x0);
+	red = SDL_MapRGB(surface->format, 0xFF, 0x0, 0x0);
+	blue = SDL_MapRGB(surface->format, 0x0, 0x0, 0xFF);
+
+	int trueWindowWidth;
+	SDL_GetWindowSize(window, &trueWindowWidth, nullptr);
+
+	hPadding = (trueWindowWidth - MAZE_PIXEL_WIDTH) / 2;
+
+	std::cout << "\nMaze: " << std::to_string(MAZE_PIXEL_WIDTH) << " by " << std::to_string(MAZE_PIXEL_WIDTH);
+
+	std::cout << "\nPadding: \n h: " << std::to_string(hPadding) << "\n v: " << std::to_string(MAZE_PADDING);
 }
 
 void Maze::drawBase()
@@ -26,34 +37,27 @@ void Maze::drawBase()
 	SDL_UpdateWindowSurface(window);
 }
 
-void Maze::drawCell(MazeNode* n, Maze::cellType type)
-{
-	Maze::drawCell(n->x, n->y, type);
-}
-
 void Maze::drawCell(int x, int y, Maze::cellType type)
 {
-	SDL_Rect rect = { (5 * MazeNode::boxPad) + x * (MazeNode::boxLen + MazeNode::boxPad), (5 * MazeNode::boxPad) + y * (MazeNode::boxLen + MazeNode::boxPad), MazeNode::boxLen, MazeNode::boxLen };
-
 	Uint32 colour;
 
 	switch (type)
 	{
 	case UNVISITED:
-		colour = white;
-		break;
+		return drawCell(x, y, white);
 	case VISITED:
-		colour = grey;
-		break;
+		return drawCell(x, y, grey);
 	case WALL:
-		colour = black;
-		break;
+		return drawCell(x, y, black);
 	default:
-		colour = green;
-		break;
+		return drawCell(x, y, green);
 	}
-	SDL_FillRect(surface, &rect, colour);
+}
 
+void Maze::drawCell(int x, int y, Uint32 colour)
+{
+	SDL_Rect rect = { hPadding + x * (MazeNode::boxLen + MazeNode::boxPad), MAZE_PADDING + y * (MazeNode::boxLen + MazeNode::boxPad), MazeNode::boxLen, MazeNode::boxLen };
+	SDL_FillRect(surface, &rect, colour);
 
 	SDL_UpdateWindowSurface(window);
 }

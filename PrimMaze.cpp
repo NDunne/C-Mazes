@@ -5,6 +5,33 @@ PrimMaze::PrimMaze(SDL_Window* w) : Maze(w)
 	generate();
 }
 
+void PrimMaze::drawEdge(MazeNode* A, MazeNode* B, edgeType e)
+{
+	switch (e)
+	{
+	case CANDIDATE:
+		drawCell(A, blue);
+		drawCell(B, blue);
+		break;
+	case VALID:
+		drawCell(A, green);
+		drawCell(B, green);
+		SDL_Delay(50);
+		drawCell(A, UNVISITED);
+		drawCell(B, UNVISITED);
+		break;
+	case INVALID:
+		drawCell(A, red);
+		drawCell(B, red);
+		SDL_Delay(50);
+		drawCell(A, UNVISITED);
+		drawCell(B, WALL);
+		break;
+	default:
+		return;
+	}
+}
+
 void PrimMaze::generate()
 {
 	drawBase();
@@ -13,9 +40,6 @@ void PrimMaze::generate()
 
 	MazeNode* endNorth = end->adjNode(NORTH);
 	MazeNode* endWest = end->adjNode(WEST);
-
-	drawCell(start, SPECIAL);
-	drawCell(end, SPECIAL);
 
 	std::vector<NodePair> edges;
 
@@ -37,12 +61,15 @@ void PrimMaze::generate()
 		int currentIndex = rand() % edges.size();
 		NodePair currentEdge = edges[currentIndex];
 
-		std::cout << "\ncurrentEdge: " << currentEdge.first->toString() << " -> " << currentEdge.second->toString();
+		drawEdge(currentEdge.first, currentEdge.second, CANDIDATE);
+		SDL_Delay(500);
 
 		if (!DFS(currentEdge.first, currentEdge.second))
 		{
 			//LOG std::cout << "\n no path";
 			mazeEdges.addEdge(currentEdge, 1);
+
+			drawEdge(currentEdge.first, currentEdge.second, VALID);
 
 			MazeNode* B = currentEdge.second;
 
@@ -66,9 +93,16 @@ void PrimMaze::generate()
 				}
 			}
 		}
+		else
+		{
+			drawEdge(currentEdge.first, currentEdge.second, INVALID);
+		}
 
 		edges.erase(edges.begin() + currentIndex);
 	}
+
+	drawCell(start, SPECIAL);
+	drawCell(end, SPECIAL);
 }
 
 bool PrimMaze::compare(MazeNode* currentNode, MazeNode* search)
@@ -79,7 +113,6 @@ bool PrimMaze::compare(MazeNode* currentNode, MazeNode* search)
 	//Efficiency - checking cross requires that x or y is the same
 	if (search->x == currentNode->x)
 	{
-		std::cout << "\nchecking y adjacent of " << search->toString() << " for " << currentNode->toString();
 		adj1 = search->adjNode(NORTH);
 		adj2 = search->adjNode(SOUTH);
 		if ((adj1 != nullptr && adj1->equals(currentNode)) || (adj2 != nullptr && adj2->equals(currentNode)))
@@ -89,7 +122,6 @@ bool PrimMaze::compare(MazeNode* currentNode, MazeNode* search)
 	}
 	else if (search->y == currentNode->y)
 	{
-		std::cout << "\nchecking X adjacent of " << search->toString() << " for " << currentNode->toString();
 		adj1 = search->adjNode(EAST);
 		adj2 = search->adjNode(WEST);
 		if ((adj1 != nullptr && adj1->equals(currentNode)) || (adj2 != nullptr && adj2->equals(currentNode)))
