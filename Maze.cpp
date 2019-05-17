@@ -12,6 +12,7 @@ Maze::Maze(SDL_Window* w)
 	green = SDL_MapRGB(surface->format, 0x0, 0xFF, 0x0);
 	red = SDL_MapRGB(surface->format, 0xFF, 0x0, 0x0);
 	blue = SDL_MapRGB(surface->format, 0x0, 0x0, 0xFF);
+	cyan = SDL_MapRGB(surface->format, 0x0, 0xFF, 0xFF);
 
 	int trueWindowWidth;
 	SDL_GetWindowSize(window, &trueWindowWidth, nullptr);

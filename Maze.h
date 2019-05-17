@@ -32,6 +32,7 @@ protected:
 	Uint32 green;
 	Uint32 red;
 	Uint32 blue;
+	Uint32 cyan;
 
 	
 	bool DFS(MazeNode* start, MazeNode* search);

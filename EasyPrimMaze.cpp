@@ -32,7 +32,7 @@ void EasyPrimMaze::drawEdge(MazeNode* A, MazeNode* B, edgeType e)
 		SDL_Delay(50);
 		drawCell(A, UNVISITED);
 		drawCell(midNode, WALL);
-		drawCell(B, UNVISITED);
+		drawCell(B, WALL);
 		break;
 	default:
 		return;
@@ -75,7 +75,12 @@ void EasyPrimMaze::generate()
 		SDL_Delay(500);
 		//std::cout << "\ncurrentEdge: " << A->toString() << " -> " << B->toString();
 
-		if (!DFS(A,B))
+		if (mazeEdges.getEdge(A, B))
+		{
+			drawEdge(A, B, VALID);
+		}
+
+		else if (!DFS(A,B))
 		{
 			//LOG std::cout << "\n no path";
 			mazeEdges.addEdge(currentEdge, 1);
@@ -100,6 +105,7 @@ void EasyPrimMaze::generate()
 				if (newNode != nullptr && !mazeEdges.getEdge(B, newNode))
 				{
 					edges.push_back({ B, newNode });
+					//drawCell(newNode, cyan);
 					//LOG std::cout << "\n Maze edge queued: " << B->toString() << " -> " << newNode->toString();
 				}
 			}
