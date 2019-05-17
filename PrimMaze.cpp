@@ -61,17 +61,23 @@ void PrimMaze::generate()
 		int currentIndex = rand() % edges.size();
 		NodePair currentEdge = edges[currentIndex];
 
-		drawEdge(currentEdge.first, currentEdge.second, CANDIDATE);
-		SDL_Delay(500);
+		MazeNode* A = currentEdge.first;
+		MazeNode* B = currentEdge.second;
 
-		if (!DFS(currentEdge.first, currentEdge.second))
+		drawEdge(A, B, CANDIDATE);
+		//SDL_Delay(500);
+
+		if (mazeEdges.getEdge(A, B))
+		{
+			drawEdge(A, B, VALID);
+		}
+
+		if (!DFS(A, B))
 		{
 			//LOG std::cout << "\n no path";
 			mazeEdges.addEdge(currentEdge, 1);
 
-			drawEdge(currentEdge.first, currentEdge.second, VALID);
-
-			MazeNode* B = currentEdge.second;
+			drawEdge(A, B, VALID);
 
 			if (B->equals(endNorth) || B->equals(endWest))
 			{
@@ -95,7 +101,7 @@ void PrimMaze::generate()
 		}
 		else
 		{
-			drawEdge(currentEdge.first, currentEdge.second, INVALID);
+			drawEdge(A, B, INVALID);
 		}
 
 		edges.erase(edges.begin() + currentIndex);
