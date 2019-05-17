@@ -32,7 +32,7 @@ void EasyPrimMaze::drawEdge(MazeNode* A, MazeNode* B, edgeType e)
 		SDL_Delay(50);
 		drawCell(A, UNVISITED);
 		drawCell(midNode, WALL);
-		drawCell(B, WALL);
+		drawCell(B, UNVISITED);
 		break;
 	default:
 		return;
@@ -124,6 +124,9 @@ void EasyPrimMaze::generate()
 
 bool EasyPrimMaze::compare(MazeNode * currentNode, MazeNode * search)
 {
+	return currentNode->equals(search);
+
+	/*
 	MazeNode* adj1;
 	MazeNode* adj2;
 
@@ -147,5 +150,5 @@ bool EasyPrimMaze::compare(MazeNode * currentNode, MazeNode * search)
 		}
 	}
 
-	return false;
+	return false;*/
 }

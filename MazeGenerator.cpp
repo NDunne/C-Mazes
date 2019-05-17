@@ -18,15 +18,22 @@ MazeGenerator::MazeGenerator(SDL_Window* sdlWin)
 MazeGenerator::~MazeGenerator()
 {}
 
-Maze* MazeGenerator::newMaze(MazeType t)
+Maze* MazeGenerator::newMaze(MazeType t, MazeDifficulty d)
 {
-	switch (t)
+	currentMaze = nullptr;
+	if (t == PRIM)
 	{
-		case EASYPRIM:
-			currentMaze = new EasyPrimMaze(window);
-			break;
-		default:
-			currentMaze = new PrimMaze(window);
+		switch (d)
+		{
+			case EASY:
+				currentMaze = new EasyPrimMaze(window);
+				break;
+			case MEDIUM:
+				currentMaze = new EasyPrimMaze(window);
+				break;
+			default:
+				currentMaze = new PrimMaze(window);
+		}
 	}
 	return currentMaze;
 }

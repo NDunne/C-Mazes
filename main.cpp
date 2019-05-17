@@ -52,11 +52,11 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 
-	//Maze* m1 = mazeGen->newMaze(PRIM);
+	Maze* m1 = mazeGen->newMaze(PRIM, EASY);
 
-	//SDL_Delay(5000);
+	SDL_Delay(5000);
 
-	Maze* m2 = mazeGen->newMaze(EASYPRIM);
+	Maze* m2 = mazeGen->newMaze(PRIM, HARD);
 
 	bool quit = false;
 
