@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SDL.h"
-#include "MazeAdj.h"
+#include "GraphImpl\MazeAdj.h"
 
 #include <vector>
 #include <random>
@@ -12,7 +12,7 @@ const int MAZE_PIXEL_HEIGHT = (MazeNode::Y_NODES * (MazeNode::boxLen + MazeNode:
 
 const int MAZE_PADDING = (4 * MazeNode::boxPad);
 
-const int drawSpeed = 20;
+const int drawSpeed = 50;
 
 class Maze
 {
