@@ -1,5 +1,8 @@
 #pragma once
-#include "PrimMaze.h"
+
+#include "PrimMazes\HardPrimMaze.h"
+#include "PrimMazes\MedPrimMaze.h"
+#include "PrimMazes\EasyPrimMaze.h"
 
 enum MazeType { PRIM };
 enum MazeDifficulty {EASY, MEDIUM, HARD };

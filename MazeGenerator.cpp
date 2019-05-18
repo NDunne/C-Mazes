@@ -1,6 +1,5 @@
 #include "MazeGenerator.h"
-#include "PrimMaze.h"
-#include "EasyPrimMaze.h"
+
 
 MazeGenerator::MazeGenerator(SDL_Window* sdlWin)
 {
@@ -29,10 +28,10 @@ Maze* MazeGenerator::newMaze(MazeType t, MazeDifficulty d)
 				currentMaze = new EasyPrimMaze(window);
 				break;
 			case MEDIUM:
-				currentMaze = new EasyPrimMaze(window);
+				currentMaze = new MedPrimMaze(window);
 				break;
 			default:
-				currentMaze = new PrimMaze(window);
+				currentMaze = new HardPrimMaze(window);
 		}
 	}
 	return currentMaze;

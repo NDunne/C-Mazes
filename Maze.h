@@ -12,11 +12,13 @@ const int MAZE_PIXEL_HEIGHT = (MazeNode::Y_NODES * (MazeNode::boxLen + MazeNode:
 
 const int MAZE_PADDING = (4 * MazeNode::boxPad);
 
+const int drawSpeed = 20;
+
 class Maze
 {
 public:
 	enum cellType { WALL, UNVISITED, VISITED, SPECIAL };
-	enum edgeType {CANDIDATE, VALID, INVALID };
+	enum edgeType {CANDIDATE, SELECTED, VALID, INVALID };
 
 	Maze(SDL_Window* w);
 

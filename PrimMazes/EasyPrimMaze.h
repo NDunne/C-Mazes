@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Maze.h"
+#include "..\Maze.h"
 
 class EasyPrimMaze : public Maze
 {

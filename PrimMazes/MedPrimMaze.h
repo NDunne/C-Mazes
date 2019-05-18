@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Maze.h"
+#include "..\Maze.h"
 
-class PrimMaze : public Maze
+class MedPrimMaze : public Maze
 {
 public:
-	PrimMaze(SDL_Window* w);
+	MedPrimMaze(SDL_Window* w);
 
 private:
+	void generate();
+
 	bool compare(MazeNode* currentNode, MazeNode* search);
 
 	void drawEdge(MazeNode* A, MazeNode* B, edgeType e);
-
-	void generate();
 };
 
