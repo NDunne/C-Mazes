@@ -2,15 +2,13 @@
 
 #include "..\Maze.h"
 
-class EasyKruskalMaze : public Maze
+class KruskalMaze : public Maze
 {
 public:
-	EasyKruskalMaze(SDL_Window* w);
+	KruskalMaze(SDL_Window* w);
 
-private:
+protected:
 	void generate();
-
-	//bool compare(NodeCoord currentNode, NodeCoord search);
 
 	void drawEdge(NodeCoord A, NodeCoord B, edgeType e);
 	void drawEdge(NodePair pair, edgeType e) { return drawEdge(pair.first, pair.second, e); }

@@ -1,11 +1,10 @@
-#include "EasyKruskalMaze.h"
-
-EasyKruskalMaze::EasyKruskalMaze(SDL_Window* w) : Maze(w)
+#include "KruskalMaze.h"
+KruskalMaze::KruskalMaze(SDL_Window* w) : Maze(w)
 {
 	generate();
 }
 
-std::vector<NodePair> EasyKruskalMaze::allEdges()
+std::vector<NodePair> KruskalMaze::allEdges()
 {
 	std::vector<NodePair> edges;
 
@@ -33,7 +32,7 @@ std::vector<NodePair> EasyKruskalMaze::allEdges()
 	return edges;
 }
 
-void EasyKruskalMaze::generate()
+void KruskalMaze::generate()
 {
 	drawBase();
 	NodeCoord start = { 1, 1 };
@@ -66,38 +65,12 @@ void EasyKruskalMaze::generate()
 			std::cout << "";
 		}
 	}
+
+	drawCell(start, SPECIAL);
+	drawCell(end, SPECIAL);
 }
 
-/*
-bool EasyKruskalMaze::compare(NodeCoord currentNode, NodeCoord search)
-{
-	NodeCoord adj1;
-	NodeCoord adj2;
-
-	//Efficiency - checking cross requires that x or y is the same
-	if (search.first == currentNode.first)
-	{
-		adj1 = MazeGraph::getAdjNode(search, NORTH, 2);
-		adj2 = MazeGraph::getAdjNode(search, SOUTH, 2);
-		if ((adj1 != nullNode && adj1 == currentNode) || (adj2 != nullNode && adj2 == currentNode))
-		{
-			return true;
-		}
-	}
-	else if (search.second == currentNode.second)
-	{
-		adj1 = MazeGraph::getAdjNode(search, EAST, 2);
-		adj2 = MazeGraph::getAdjNode(search, WEST, 2);
-		if ((adj1 != nullNode && adj1 == currentNode) || (adj2 != nullNode && adj2 == currentNode))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}*/
-
-void EasyKruskalMaze::drawEdge(NodeCoord A, NodeCoord B, edgeType e)
+void KruskalMaze::drawEdge(NodeCoord A, NodeCoord B, edgeType e)
 {
 	NodeCoord midNode = { (A.first + B.first) / 2, (A.second + B.second) / 2 };
 

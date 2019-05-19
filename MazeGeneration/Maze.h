@@ -14,7 +14,7 @@ const int MAZE_PIXEL_HEIGHT = (MazeGraph::Y_NODES * (MazeGraph::boxLen + MazeGra
 
 const int MAZE_PADDING = (4 * MazeGraph::boxPad);
 
-const int drawSpeed = 10;
+const int drawSpeed = 1;
 
 const Uint32 black = 0x0;
 const Uint32 grey = 0x303030;

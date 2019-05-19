@@ -62,13 +62,9 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 
-	/*
-	Maze* m1 = mazeGen->newMaze(PRIM, EASY);
-	
-	m1 = mazeGen->newMaze(PRIM, MEDIUM);
-	m1 = mazeGen->newMaze(PRIM, HARD);
-	*/
-	Maze* m1 = mazeGen->newMaze(KRUSKAL, EASY);
+	Maze* m1 = mazeGen->newMaze(KRUSKAL);
+
+	m1 = mazeGen->newMaze(PRIM);
 
 	delete m1;
 

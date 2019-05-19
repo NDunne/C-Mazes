@@ -1,13 +1,11 @@
 #pragma once
 
-#include "PrimMazes\HardPrimMaze.h"
-#include "PrimMazes\MedPrimMaze.h"
-#include "PrimMazes\EasyPrimMaze.h"
+#include "PrimMazes\PrimMaze.h"
 
-#include "KruskalMazes\EasyKruskalMaze.h"
+#include "KruskalMazes\KruskalMaze.h"
+
 
 enum MazeType { PRIM, KRUSKAL };
-enum MazeDifficulty {EASY, MEDIUM, HARD };
 
 class MazeGenerator
 {
@@ -15,7 +13,7 @@ public:
 	MazeGenerator(SDL_Window* sdlWin);
 	~MazeGenerator();
 
-	Maze* newMaze(MazeType t, MazeDifficulty d);
+	Maze* newMaze(MazeType t);
 
 	Maze* getMaze();
 

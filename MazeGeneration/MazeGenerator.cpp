@@ -19,24 +19,16 @@ MazeGenerator::~MazeGenerator()
 	delete currentMaze;
 }
 
-Maze* MazeGenerator::newMaze(MazeType t, MazeDifficulty d)
+Maze* MazeGenerator::newMaze(MazeType t)
 {
 	if (t == PRIM)
 	{
-		switch (d)
-		{
-		case EASY:
-			currentMaze = new EasyPrimMaze(window);
-			break;
-		case MEDIUM:
-			currentMaze = new MedPrimMaze(window);
-			break;
-		default:
-			currentMaze = new HardPrimMaze(window);
-		}
+		currentMaze = new PrimMaze(window);
 	}
 	else
-		currentMaze = new EasyKruskalMaze(window);
+	{
+		currentMaze = new KruskalMaze(window);
+	}
 
 	return currentMaze;
 }

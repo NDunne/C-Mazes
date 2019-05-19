@@ -21,10 +21,10 @@ const NodeCoord nullNode = { -1, -1 };
 class MazeGraph
 {
 public:
-	const static int X_NODES = 21;
-	const static int Y_NODES = 21;
+	const static int X_NODES = 7;
+	const static int Y_NODES = 7;
 
-	const static int boxLen = 20;
+	const static int boxLen = 30;
 	const static int boxPad = 2;
 
 	static NodeCoord getAdjNode(int x, int y, direction dir, int dist = 1);
