@@ -5,9 +5,9 @@ MedPrimMaze::MedPrimMaze(SDL_Window* w) : Maze(w)
 	generate();
 }
 
-void MedPrimMaze::drawEdge(MazeNode* A, MazeNode* B, edgeType e)
+void MedPrimMaze::drawEdge(NodeCoord A, NodeCoord B, edgeType e)
 {
-	MazeNode* midNode = new MazeNode((A->x + B->x) / 2, (A->y + B->y) / 2);
+	NodeCoord midNode = { (A.first + B.first) / 2, (A.second + B.second) / 2 };
 
 	switch (e)
 	{
@@ -37,16 +37,18 @@ void MedPrimMaze::drawEdge(MazeNode* A, MazeNode* B, edgeType e)
 	default:
 		return;
 	}
+
+	//delete midNode;
 }
 
 void MedPrimMaze::generate()
 {
 	drawBase();
-	MazeNode* start = new MazeNode(1, 1);
-	MazeNode* end = new MazeNode(MazeNode::X_NODES - 2, MazeNode::Y_NODES - 2);
+	NodeCoord start = { 1, 1 };
+	NodeCoord end = { MazeGraph::X_NODES - 2, MazeGraph::Y_NODES - 2 };
 
-	MazeNode * endNorth = end->adjNode(NORTH, 2);
-	MazeNode * endWest = end->adjNode(WEST, 2);
+	NodeCoord endNorth = MazeGraph::getAdjNode(end, NORTH, 2);
+	NodeCoord endWest = MazeGraph::getAdjNode(end, WEST, 2);
 
 	std::vector<NodePair> edges;
 
@@ -54,12 +56,12 @@ void MedPrimMaze::generate()
 
 	if (rand() % 2)
 	{
-		edges.push_back({ start, start->adjNode(EAST,2) });
+		edges.push_back({ start, MazeGraph::getAdjNode(start, EAST,2) });
 		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(EAST)->toString();
 	}
 	else
 	{
-		edges.push_back({ start, start->adjNode(SOUTH,2) });
+		edges.push_back({ start, MazeGraph::getAdjNode(start, SOUTH,2) });
 		//LOG std::cout << "\nPushing edge: " << start->toString() << " -> " << start->adjNode(SOUTH)->toString();
 	}
 
@@ -68,11 +70,10 @@ void MedPrimMaze::generate()
 		int currentIndex = rand() % edges.size();
 		NodePair currentEdge = edges[currentIndex];
 
-		MazeNode* A = currentEdge.first;
-		MazeNode* B = currentEdge.second;
+		NodeCoord A = currentEdge.first;
+		NodeCoord B = currentEdge.second;
 
 		drawEdge(A, B, CANDIDATE);
-		SDL_Delay(1000 / drawSpeed);
 		//std::cout << "\ncurrentEdge: " << A->toString() << " -> " << B->toString();
 
 		if (mazeEdges.getEdge(A, B))
@@ -84,10 +85,10 @@ void MedPrimMaze::generate()
 		{
 			//LOG std::cout << "\n no path";
 			mazeEdges.addEdge(currentEdge, 1);
-
+			SDL_Delay(1000 / drawSpeed);
 			drawEdge(A, B, VALID);
 
-			if ((B->equals(endNorth) || B->equals(endWest)) && !DFS(B, end))
+			if ((B ==endNorth || B == endWest) && !DFS(B, end))
 			{
 				mazeEdges.addEdge(B, end, 1);
 
@@ -98,11 +99,10 @@ void MedPrimMaze::generate()
 			{
 				direction e_dir = (direction)dir;
 
-				MazeNode* newNode = B->adjNode(e_dir, 2);
-				if (newNode != nullptr && !mazeEdges.getEdge(B, newNode))
+				NodeCoord newNode = MazeGraph::getAdjNode(B, e_dir, 2);
+				if (newNode != nullNode && !mazeEdges.getEdge(B, newNode))
 				{
 					edges.push_back({ B, newNode });
-					//drawCell(newNode, cyan);
 					//LOG std::cout << "\n Maze edge queued: " << B->toString() << " -> " << newNode->toString();
 				}
 			}
@@ -117,9 +117,4 @@ void MedPrimMaze::generate()
 
 	drawCell(start, SPECIAL);
 	drawCell(end, SPECIAL);
-}
-
-bool MedPrimMaze::compare(MazeNode * currentNode, MazeNode * search)
-{
-	return currentNode->equals(search);
 }

@@ -4,7 +4,9 @@
 #include "PrimMazes\MedPrimMaze.h"
 #include "PrimMazes\EasyPrimMaze.h"
 
-enum MazeType { PRIM };
+#include "KruskalMazes\EasyKruskalMaze.h"
+
+enum MazeType { PRIM, KRUSKAL };
 enum MazeDifficulty {EASY, MEDIUM, HARD };
 
 class MazeGenerator

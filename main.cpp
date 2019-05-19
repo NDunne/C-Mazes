@@ -1,7 +1,17 @@
 //Using SDL and standard IO
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include <iostream>
 
-#include "MazeGenerator.h"
+#include "MazeGeneration\MazeGenerator.h"
+
+/*
+TODO
+- Kruskals generator
+- Recursive division generator
+*/
 
 SDL_Window* initSDL()
 {
@@ -52,15 +62,15 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 
+	/*
 	Maze* m1 = mazeGen->newMaze(PRIM, EASY);
+	
+	m1 = mazeGen->newMaze(PRIM, MEDIUM);
+	m1 = mazeGen->newMaze(PRIM, HARD);
+	*/
+	Maze* m1 = mazeGen->newMaze(KRUSKAL, EASY);
 
-	SDL_Delay(5000);
-
-	Maze* m2 = mazeGen->newMaze(PRIM, MEDIUM);
-
-	SDL_Delay(5000);
-
-	Maze* m3 = mazeGen->newMaze(PRIM, HARD);
+	delete m1;
 
 	bool quit = false;
 
@@ -76,8 +86,12 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+	
+	delete mazeGen;
 
 	close(window);
+
+	_CrtDumpMemoryLeaks();
 
 	return 0;
 }

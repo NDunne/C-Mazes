@@ -10,8 +10,8 @@ public:
 private:
 	void generate();
 
-	bool compare(MazeNode* currentNode, MazeNode* search);
+	bool compare(NodeCoord currentNode, NodeCoord search);
 
-	void drawEdge(MazeNode* A, MazeNode* B, edgeType e);
+	void drawEdge(NodeCoord A, NodeCoord B, edgeType e);
 };
 
