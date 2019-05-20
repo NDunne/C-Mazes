@@ -1,15 +1,13 @@
 #pragma once
 
-#include "..\Maze.h"
+#include "..\MSTMaze.h"
 
-class PrimMaze : public Maze
+class PrimMaze : public MSTMaze
 {
 public:
 	PrimMaze(SDL_Window* w);
 
 private:
 	void generate();
-
-	void drawEdge(NodeCoord A, NodeCoord B, edgeType e);
 };
 

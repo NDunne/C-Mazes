@@ -58,13 +58,13 @@ int main(int argc, char** argv)
 
 	SDL_GetWindowSize(window, &width, &height);
 
-	std::cout << "window: " << std::to_string(width) << " by " << std::to_string(height);
-
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 
-	Maze* m1 = mazeGen->newMaze(KRUSKAL);
+	Maze* m1 = mazeGen->newMaze(RECDIV);
 
-	m1 = mazeGen->newMaze(PRIM);
+	//m1 = mazeGen->newMaze(KRUSKAL);
+
+	//m1 = mazeGen->newMaze(PRIM);
 
 	delete m1;
 

@@ -25,9 +25,13 @@ Maze* MazeGenerator::newMaze(MazeType t)
 	{
 		currentMaze = new PrimMaze(window);
 	}
-	else
+	else if (t == KRUSKAL)
 	{
 		currentMaze = new KruskalMaze(window);
+	}
+	else
+	{
+		currentMaze = new RecDivMaze(window);
 	}
 
 	return currentMaze;

@@ -1,40 +1,25 @@
 #pragma once
 
-#include <string>
-#include <iterator>
-#include <iostream>
-#include <stack>
-#include <map>
+#include "Maze.h"
 
-using NodeCoord = std::pair<int, int>;
+#include <string>
+#include <stack>
+
 using NodeAdj = std::map < NodeCoord, int > ;
 using adjacency = std::map< NodeCoord, NodeAdj >;
 
 //an adjacency: A:(Ax,Ay) -> (B:(Bx,By) -> w(A,B))
 
-using NodePair = std::pair<NodeCoord, NodeCoord>;
-
-enum direction { NORTH, EAST, SOUTH, WEST, END };
-
-const NodeCoord nullNode = { -1, -1 };
-
 class MazeGraph
 {
 public:
-	const static int X_NODES = 7;
-	const static int Y_NODES = 7;
+	void addEdge(NodePair n, int w) { return addEdge(n.first, n.second); }
+	void addEdge(int x1, int y1, int x2, int y2) { return addEdge({ x1, y1 }, { x2, y2 }); }
+	void addEdge(NodeCoord A, NodeCoord B);
 
-	const static int boxLen = 30;
-	const static int boxPad = 2;
-
-	static NodeCoord getAdjNode(int x, int y, direction dir, int dist = 1);
-	static NodeCoord getAdjNode(NodeCoord n, direction dir, int dist = 1) { return getAdjNode(n.first, n.second, dir, dist); }
-
-	void addEdge(NodePair n, int w) { return addEdge(n.first, n.second, w); }
-
-	void addEdge(int x1, int y1, int x2, int y2, int w) { return addEdge({ x1, y1 }, {x2, y2}, w); }
-
-	void addEdge(NodeCoord A, NodeCoord B, int w);
+	void removeEdge(NodePair n, int w) { return addEdge(n.first, n.second); }
+	void removeEdge(int x1, int y1, int x2, int y2) { return addEdge({ x1, y1 }, { x2, y2 }); }
+	void removeEdge(NodeCoord A, NodeCoord B);
 
 	//retrieve the edge weight from the matrix
 	int getEdge(NodePair p) { return getEdge(p.first, p.second); }

@@ -1,60 +1,81 @@
 #pragma once
 
 #include "SDL.h"
-#include "MazeGraph.h"
 
+#include <iterator>
+#include <iostream>
+#include <string>
+#include <iterator>
 #include <algorithm>
 #include <vector>
 #include <random>
 #include <ctime>
 #include <chrono>
+#include <map>
 
-const int MAZE_PIXEL_WIDTH = (MazeGraph::X_NODES * (MazeGraph::boxLen + MazeGraph::boxPad)) - MazeGraph::boxPad; //550;
-const int MAZE_PIXEL_HEIGHT = (MazeGraph::Y_NODES * (MazeGraph::boxLen + MazeGraph::boxPad)) - MazeGraph::boxPad;
+enum cellType { WALL, UNVISITED, VISITED, SPECIAL, SELECTED, VALID, INVALID };
 
-const int MAZE_PADDING = (4 * MazeGraph::boxPad);
+enum direction { NORTH, EAST, SOUTH, WEST, END };
 
-const int drawSpeed = 1;
+using NodeCoord = std::pair<int, int>;
+using nodeTypeMap = std::map<NodeCoord, cellType>;
+
+using NodePair = std::pair<NodeCoord, NodeCoord>;
+
+const NodeCoord nullNode = { -1, -1 };
 
 const Uint32 black = 0x0;
 const Uint32 grey = 0x303030;
 const Uint32 white = 0xF0F0F0;
 const Uint32 green = 0x00FF00;
-const Uint32  red = 0xFF0000;
+const Uint32 red = 0xFF0000;
 const Uint32 blue = 0x0000FF;
-const Uint32  cyan = 0x00FFFF;
+const Uint32 cyan = 0x00FFFF;
+
+const int startSpeed = 550;
+
+const int X_NODES = 15;
+const int Y_NODES = 15;
+
+const int boxLen = 20;
+const int boxPad = 1;
+
+const int MAZE_PIXEL_WIDTH = (X_NODES * (boxLen + boxPad)) - boxPad; //550;
+const int MAZE_PIXEL_HEIGHT = (Y_NODES * (boxLen + boxPad)) - boxPad;
+
+const int MAZE_PADDING = (4 * boxPad);
 
 class Maze
 {
 public:
-	enum cellType { WALL, UNVISITED, VISITED, SPECIAL };
-	enum edgeType {CANDIDATE, SELECTED, VALID, INVALID };
-
 	Maze(SDL_Window* w);
 
-	void drawBase();
+	static NodeCoord getAdjNode(int x, int y, direction dir, int dist = 1);
+	static NodeCoord getAdjNode(NodeCoord n, direction dir, int dist = 1) { return getAdjNode(n.first, n.second, dir, dist); }
+
+	int drawSpeed;
+
+	cellType getCellType(NodeCoord n);
+	cellType getCellType(int x, int y) { return getCellType(x, y); }
+
+	void setCellType(NodeCoord n, cellType type);
+	void setCellType(int x, int y, cellType type) { return setCellType({ x, y }, type); }
 
 protected:
 	SDL_Window* window;
 	SDL_Surface* surface;
 
-	bool DFS(NodeCoord start, NodeCoord search);
+	void drawDelay();
 
-	void drawCell(NodeCoord n, Maze::cellType type) { drawCell(n.first, n.second, type); };
-	void drawCell(int x, int y, Maze::cellType type);
-	void drawCell(NodeCoord n, Uint32 colour) { drawCell(n.first, n.second, colour); };
-	void drawCell(int x, int y, Uint32 colour);
-
-	virtual void drawEdge(NodeCoord A, NodeCoord B, edgeType e) = 0;
-
-	MazeGraph mazeEdges;
-
-	//Used in DFS - to say if a node is a match or not, needs to be different
-	virtual bool compare(NodeCoord currentNode, NodeCoord search);
+	virtual void drawBase();
 
 	virtual void generate() = 0;
 
 private:
 	int hPadding;
-};
 
+	nodeTypeMap mazeNodes;
+
+	void drawCell(NodeCoord n, cellType type);
+	void drawCell(int x, int y, Uint32 colour);
+};

@@ -4,8 +4,10 @@
 
 #include "KruskalMazes\KruskalMaze.h"
 
+#include "RecDivMaze\RecDivMaze.h"
 
-enum MazeType { PRIM, KRUSKAL };
+
+enum MazeType { PRIM, KRUSKAL, RECDIV };
 
 class MazeGenerator
 {
