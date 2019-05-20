@@ -34,8 +34,8 @@ const Uint32 cyan = 0x00FFFF;
 
 const int startSpeed = 550;
 
-const int X_NODES = 25;
-const int Y_NODES = 25;
+const int X_NODES = 45;
+const int Y_NODES = 45;
 
 const int boxLen = 10;
 const int boxPad = 1;

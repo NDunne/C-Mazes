@@ -124,32 +124,17 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 	}
 }
 
-//If door both sides of the selected wall we have impassable code.
-bool RecDivMaze::drawHWall(int x1, int x2, int y)
+void RecDivMaze::drawHWall(int x1, int x2, int y)
 {
+	int randMax = (1 + (x2 - x1));
+
 	int door;
-
-	bool startEdgeIsDoor = getCellType({ x1 - 1,y }) != WALL;
-	bool endEdgeIsDoor = getCellType({ x2 + 1,y }) != WALL;
-
-	if (startEdgeIsDoor && endEdgeIsDoor)
+	
+	do
 	{
-		return false;
-	}
-	else if (startEdgeIsDoor)
-	{
-		door = 0;
-	}
-	else if (endEdgeIsDoor)
-	{
-		door = (x2 - x1);
-	}
-	else
-	{
-		int randMax = (1 + (x2 - x1));
-		
 		door = rand() % randMax;
-	}
+	} 
+	while ((door != 0 && getCellType({ x1 - 1,y }) != WALL) || (x1 + door != x2 && getCellType({ x2 + 1,y }) != WALL));
 
 	for (int i = x1; i <= x2; i++)
 	{
@@ -158,8 +143,6 @@ bool RecDivMaze::drawHWall(int x1, int x2, int y)
 			setCellType(i,y,WALL);
 		}
 	}
-
-	return true;
 }
 
 void RecDivMaze::drawVWall(int x, int y1, int y2)

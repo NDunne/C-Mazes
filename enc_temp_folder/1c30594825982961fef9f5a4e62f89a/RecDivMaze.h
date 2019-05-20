@@ -20,8 +20,8 @@ protected:
 
 	void splitContainer(nodeContainer currentNodes);
 
-	bool drawHWall(int x1, int x2, int y);
+	void drawHWall(int x1, int x2, int y);
 
-	bool drawVWall(int x, int y1, int y2);
+	void drawVWall(int x, int y1, int y2);
 };
 
