@@ -34,10 +34,10 @@ const Uint32 cyan = 0x00FFFF;
 
 const int startSpeed = 550;
 
-const int X_NODES = 15;
-const int Y_NODES = 15;
+const int X_NODES = 25;
+const int Y_NODES = 25;
 
-const int boxLen = 20;
+const int boxLen = 10;
 const int boxPad = 1;
 
 const int MAZE_PIXEL_WIDTH = (X_NODES * (boxLen + boxPad)) - boxPad; //550;
