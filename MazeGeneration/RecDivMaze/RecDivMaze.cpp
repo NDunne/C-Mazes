@@ -1,5 +1,7 @@
 #include "RecDivMaze.h"
 
+//1 - 3 - 3 - 1 deadlock still
+
 RecDivMaze::RecDivMaze(SDL_Window* w) : Maze(w)
 {
 	generate();
@@ -44,13 +46,17 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 	{
 		return;
 	}
-	else if (numX == 2 && numY == 2)
+	else if ((numX == 2 && numY == 2) || (numX == 2 && numY == 3) || (numX == 3 && numY == 2))
 	{
+		int h = (numX == 3 && numY == 2);
+		int v = (numX == 2 && numY == 3);
+
 		drawDelay();
 		srand(time(NULL));
 
 		int r;
 		NodeCoord choice;
+		nodeContainer remaining;
 		bool valid = true;
 		do
 		{
@@ -60,23 +66,28 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 				case 0:
 					choice = {currentNodes.xStart,currentNodes.yStart};
 					valid = (getCellType(getAdjNode(choice,NORTH)) == UNVISITED || getCellType(getAdjNode(choice, WEST)) == UNVISITED);
+					remaining = { currentNodes.xStart + h,currentNodes.yStart + v,currentNodes.xLimit,currentNodes.yLimit };
 					break;
 				case 1:
 					choice = { currentNodes.xLimit,currentNodes.yStart };
 					valid = (getCellType(getAdjNode(choice, NORTH)) == UNVISITED || getCellType(getAdjNode(choice, EAST)) == UNVISITED);
+					remaining = { currentNodes.xStart,currentNodes.yStart + v,currentNodes.xLimit - h,currentNodes.yLimit };
 					break;
 				case 2:
 					choice = { currentNodes.xStart,currentNodes.yLimit };
 					valid = (getCellType(getAdjNode(choice, SOUTH)) == UNVISITED || getCellType(getAdjNode(choice, WEST)) == UNVISITED);
+					remaining = { currentNodes.xStart,currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit - v };
 					break;
 				default:
 					choice = { currentNodes.xLimit,currentNodes.yLimit };
 					valid = (getCellType(getAdjNode(choice, SOUTH)) == UNVISITED || getCellType(getAdjNode(choice, EAST)) == UNVISITED);
+					remaining = { currentNodes.xStart + h,currentNodes.yStart,currentNodes.xLimit - h,currentNodes.yLimit - v };
 					break;
 			}
 		} while (valid);
 
 		setCellType(choice, WALL);
+		if (v + h) splitContainer(remaining);
 	}
 	else
 	{
@@ -87,39 +98,54 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 		//choice is the index of the wall
 		drawDelay();
 
+		bool drawn = false;
 		int choice;
 
 		if (numY < numX)
 		{
-			choice = currentNodes.xStart + (rand() % (numX - 2)) + 1; //-2 to ensure 2 containers
-			drawVWall(choice, currentNodes.yStart, currentNodes.yLimit);
-			splitContainer({currentNodes.xStart,currentNodes.yStart,choice-1,currentNodes.yLimit });
-			splitContainer({choice+1, currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit });
+			do
+			{
+				choice = currentNodes.xStart + (rand() % (numX - 2)) + 1; //-2 to ensure 2 containers
+				drawn = drawVWall(choice, currentNodes.yStart, currentNodes.yLimit);
+			} 
+			while (!drawn);
+			splitContainer({ currentNodes.xStart,currentNodes.yStart,choice - 1,currentNodes.yLimit });
+			splitContainer({ choice + 1, currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit });
 		}
 		else if (numX < numY)
 		{
-			choice = currentNodes.yStart + (rand() % (numY - 2)) + 1; //-2 to ensure 2 containers
-			drawHWall(currentNodes.xStart, currentNodes.xLimit, choice);
-			splitContainer({ currentNodes.xStart, currentNodes.yStart, currentNodes.xLimit, choice-1});
-			splitContainer({currentNodes.xStart, choice+1, currentNodes.xLimit, currentNodes.yLimit});
+			do
+			{
+				choice = currentNodes.yStart + (rand() % (numY - 2)) + 1; //-2 to ensure 2 containers
+				drawn = drawHWall(currentNodes.xStart, currentNodes.xLimit, choice);
+			} 
+			while (!drawn);
+			splitContainer({ currentNodes.xStart, currentNodes.yStart, currentNodes.xLimit, choice - 1 });
+			splitContainer({ currentNodes.xStart, choice + 1, currentNodes.xLimit, currentNodes.yLimit });
 		}
 		else
 		{
-			choice = rand() % ((numX + numY) - 4);
-			if (choice < numX)
+			do
 			{
-				choice = currentNodes.xStart + (rand() % (numX - 2)) + 1; //-2 to ensure 2 containers
-				drawVWall(choice, currentNodes.yStart, currentNodes.yLimit);
-				splitContainer({ currentNodes.xStart,currentNodes.yStart,choice - 1,currentNodes.yLimit });
-				splitContainer({ choice + 1, currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit });
-			}
-			else
-			{
-				choice = currentNodes.yStart + (rand() % (numY - 2)) + 1; //-2 to ensure 2 containers
-				drawHWall(currentNodes.xStart, currentNodes.xLimit, choice);
-				splitContainer({ currentNodes.xStart, currentNodes.yStart, currentNodes.xLimit, choice - 1 });
-				splitContainer({ currentNodes.xStart, choice + 1, currentNodes.xLimit, currentNodes.yLimit });
-			}
+				choice = rand() % 2;//((numX + numY) - 4);
+				if (choice == 0)
+				{
+					choice = currentNodes.xStart + (rand() % (numX - 2)) + 1; //-2 to ensure 2 containers
+					drawn = drawVWall(choice, currentNodes.yStart, currentNodes.yLimit);
+					if (!drawn) continue;
+					splitContainer({ currentNodes.xStart,currentNodes.yStart,choice - 1,currentNodes.yLimit });
+					splitContainer({ choice + 1, currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit });
+				}
+				else
+				{
+					choice = currentNodes.yStart + (rand() % (numY - 2)) + 1; //-2 to ensure 2 containers
+					drawn = drawHWall(currentNodes.xStart, currentNodes.xLimit, choice);
+					if (!drawn) continue;
+					splitContainer({ currentNodes.xStart, currentNodes.yStart, currentNodes.xLimit, choice - 1 });
+					splitContainer({ currentNodes.xStart, choice + 1, currentNodes.xLimit, currentNodes.yLimit });
+				}
+			} 
+			while (!drawn);
 		}
 	}
 }
@@ -162,22 +188,39 @@ bool RecDivMaze::drawHWall(int x1, int x2, int y)
 	return true;
 }
 
-void RecDivMaze::drawVWall(int x, int y1, int y2)
+bool RecDivMaze::drawVWall(int x, int y1, int y2)
 {
-	int randMax = (1 + (y2 - y1));
-
 	int door;
 
-	do
+	bool startEdgeIsDoor = getCellType({ x,y1 -1 }) != WALL;
+	bool endEdgeIsDoor = getCellType({ x,y2 + 1 }) != WALL;
+
+	if (startEdgeIsDoor && endEdgeIsDoor)
 	{
+		return false;
+	}
+	else if (startEdgeIsDoor)
+	{
+		door = 0;
+	}
+	else if (endEdgeIsDoor)
+	{
+		door = (y2 - y1);
+	}
+	else
+	{
+		int randMax = (1 + (y2 - y1));
+
 		door = rand() % randMax;
-	} while ((door != 0 && getCellType({ x, y1 - 1, }) != WALL) || ((y1 + door != y2 && getCellType({ x, y2 + 1 }) != WALL)));
+	}
 
 	for (int i = y1; i <= y2; i++)
 	{
 		if (i != y1 + door)
 		{
-			setCellType(x,i, WALL);
+			setCellType(x, i, WALL);
 		}
 	}
+
+	return true;
 }
