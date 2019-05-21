@@ -20,6 +20,8 @@ protected:
 
 	void splitContainer(nodeContainer currentNodes);
 
+	bool isTripleCorridor(nodeContainer currentNodes, int numX, int numY);
+
 	bool drawHWall(int x1, int x2, int y);
 
 	bool drawVWall(int x, int y1, int y2);

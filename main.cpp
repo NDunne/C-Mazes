@@ -62,9 +62,13 @@ int main(int argc, char** argv)
 
 	Maze* m1 = mazeGen->newMaze(RECDIV);
 
-	//m1 = mazeGen->newMaze(KRUSKAL);
+	SDL_Delay(2000);
 
-	//m1 = mazeGen->newMaze(PRIM);
+	m1 = mazeGen->newMaze(KRUSKAL);
+
+	SDL_Delay(2000);
+
+	m1 = mazeGen->newMaze(PRIM);
 
 	delete m1;
 

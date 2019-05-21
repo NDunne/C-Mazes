@@ -37,6 +37,21 @@ void RecDivMaze::generate()
 
 }
 
+//a 1 3 3 1 structure is a special case
+bool RecDivMaze::isTripleCorridor(nodeContainer currentNodes, int numX, int numY)
+{
+	//vertical
+	if (numX == 2 && numY == 3)
+	{
+		return ((getCellType({ currentNodes.xStart - 1,currentNodes.yStart + 1}) == UNVISITED) && (getCellType({ currentNodes.xLimit + 1, currentNodes.xStart - 1 }) == UNVISITED));
+	}
+	else if (numX == 3 && numY == 2)
+	{
+		return ((getCellType({ currentNodes.xStart + 1, currentNodes.yStart - 1 }) == UNVISITED) && (getCellType({ currentNodes.xStart + 1, currentNodes.yLimit + 1 }) == UNVISITED));
+	}
+	return false;
+}
+
 void RecDivMaze::splitContainer(nodeContainer currentNodes)
 {
 	int numX = currentNodes.xLimit - currentNodes.xStart + 1;
@@ -46,7 +61,7 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 	{
 		return;
 	}
-	else if ((numX == 2 && numY == 2) || (numX == 2 && numY == 3) || (numX == 3 && numY == 2))
+	else if ((numX == 2 && numY == 2) || isTripleCorridor(currentNodes, numX, numY))
 	{
 		int h = (numX == 3 && numY == 2);
 		int v = (numX == 2 && numY == 3);
