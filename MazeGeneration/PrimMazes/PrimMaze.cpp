@@ -37,15 +37,14 @@ void PrimMaze::generate()
 		NodeCoord A = currentEdge.first;
 		NodeCoord B = currentEdge.second;
 
-		drawEdge(A, B, SELECTED);
-		//std::cout << "\ncurrentEdge: " << A->toString() << " -> " << B->toString();
-
-		if (mazeEdges.getEdge(A, B))
+		//drawEdge(A, B, SELECTED);
+		/*if (mazeEdges.getEdge(A, B))
 		{
 			drawEdge(A, B, VALID);
 		}
 
-		else if (!DFS(A, B))
+		else*/
+		if (!DFS(A, B))
 		{
 			//LOG std::cout << "\n no path";
 			addEdge(currentEdge);
@@ -63,18 +62,17 @@ void PrimMaze::generate()
 				if (newNode != nullNode && !mazeEdges.getEdge(B, newNode))
 				{
 					edges.push_back({ B, newNode });
-					//LOG std::cout << "\n Maze edge queued: " << B->toString() << " -> " << newNode->toString();
 				}
 			}
 		}
-		else
+		/*else
 		{
 			drawEdge(A, B, INVALID);
-		}
+		}*/
 
 		edges.erase(edges.begin() + currentIndex);
 	}
 
-	setCellType(start, SPECIAL);
-	setCellType(end, SPECIAL);
+	//setCellType(start, SPECIAL);
+	//setCellType(end, SPECIAL);
 }

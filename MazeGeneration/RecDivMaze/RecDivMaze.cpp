@@ -7,6 +7,20 @@ RecDivMaze::RecDivMaze(SDL_Window* w) : Maze(w)
 	generate();
 }
 
+void RecDivMaze::drawContainer(nodeContainer bounds)
+{
+	nextColor();
+	for (int i = bounds.xStart; i <= bounds.xLimit; i++)
+	{
+		for (int j = bounds.yStart; j <= bounds.yLimit; j++)
+		{
+			drawCell(i, j, color, false);
+		}
+	}
+
+	SDL_UpdateWindowSurface(window);
+}
+
 void RecDivMaze::drawBase()
 {
 	for (int i = 0; i < X_NODES; i++)
@@ -15,14 +29,17 @@ void RecDivMaze::drawBase()
 		{
 			if (i == 0 || j == 0 || i == (X_NODES - 1) || j == (Y_NODES - 1))
 			{
-				setCellType(i, j, WALL);
+				setCellType(i, j, WALL, false);
 			}
 			else
 			{
-				setCellType(i, j, UNVISITED);
+				setCellType(i, j, UNVISITED, false);
 			}
 		}
 	}
+
+	//Update the surface
+	SDL_UpdateWindowSurface(window);
 }
 
 void RecDivMaze::generate()
@@ -32,8 +49,8 @@ void RecDivMaze::generate()
 	splitContainer({ 1, 1, X_NODES-2, Y_NODES-2 }); //Coordinates are inclusive
 
 
-	setCellType({1, 1}, SPECIAL);
-	setCellType({ X_NODES - 2, Y_NODES - 2 }, SPECIAL);
+	//setCellType({1, 1}, SPECIAL);
+	//setCellType({ X_NODES - 2, Y_NODES - 2 }, SPECIAL);
 
 }
 
@@ -54,6 +71,8 @@ bool RecDivMaze::isTripleCorridor(nodeContainer currentNodes, int numX, int numY
 
 void RecDivMaze::splitContainer(nodeContainer currentNodes)
 {
+	drawContainer(currentNodes);
+
 	int numX = currentNodes.xLimit - currentNodes.xStart + 1;
 	int numY = currentNodes.yLimit - currentNodes.yStart + 1;
 

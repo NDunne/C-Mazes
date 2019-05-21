@@ -26,19 +26,20 @@ const NodeCoord nullNode = { -1, -1 };
 
 const Uint32 black = 0x0;
 const Uint32 grey = 0x303030;
-const Uint32 white = 0xF0F0F0;
+const Uint32 white = 0xFFFFFF;
+const Uint32 light = 0xF0F0F0;
 const Uint32 green = 0x00FF00;
 const Uint32 red = 0xFF0000;
 const Uint32 blue = 0x0000FF;
 const Uint32 cyan = 0x00FFFF;
 
-const int startSpeed = 550;
+const int startSpeed = 710;
 
 const int X_NODES = 45;
 const int Y_NODES = 45;
 
-const int boxLen = 10;
-const int boxPad = 1;
+const int boxLen = 20;
+const int boxPad = 0;
 
 const int MAZE_PIXEL_WIDTH = (X_NODES * (boxLen + boxPad)) - boxPad; //550;
 const int MAZE_PIXEL_HEIGHT = (Y_NODES * (boxLen + boxPad)) - boxPad;
@@ -58,8 +59,8 @@ public:
 	cellType getCellType(NodeCoord n);
 	cellType getCellType(int x, int y) { return getCellType(x, y); }
 
-	void setCellType(NodeCoord n, cellType type);
-	void setCellType(int x, int y, cellType type) { return setCellType({ x, y }, type); }
+	void setCellType(NodeCoord n, cellType type, bool update=true);
+	void setCellType(int x, int y, cellType type, bool update=true) { return setCellType({ x, y }, type, update); }
 
 protected:
 	SDL_Window* window;
@@ -71,11 +72,16 @@ protected:
 
 	virtual void generate() = 0;
 
+	Uint32 color = red;
+
+	void nextColor();
+
+	void drawCell(int x, int y, Uint32 colour, bool update);
+
 private:
 	int hPadding;
 
 	nodeTypeMap mazeNodes;
 
-	void drawCell(NodeCoord n, cellType type);
-	void drawCell(int x, int y, Uint32 colour);
+	void drawCell(NodeCoord n, cellType type, bool update);
 };

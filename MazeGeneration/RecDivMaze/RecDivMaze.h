@@ -16,6 +16,8 @@ public:
 protected:
 	void generate();
 
+	void drawContainer(nodeContainer bounds);
+
 	virtual void drawBase();
 
 	void splitContainer(nodeContainer currentNodes);

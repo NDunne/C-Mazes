@@ -49,18 +49,18 @@ void KruskalMaze::generate()
 	for (int i = 0; i < numEdges; i++)
 	{
 		NodePair currentEdge = edges[i];
-		drawEdge(currentEdge.first, currentEdge.second, SELECTED);
+		//drawEdge(currentEdge.first, currentEdge.second, SELECTED);
 	
 		if (!DFS(currentEdge.first, currentEdge.second))
 		{
 			addEdge(currentEdge);
 		}
-		else
+		/*else
 		{
 			drawEdge(currentEdge, INVALID);
-		}
+		}*/
 	}
 
-	setCellType(start, SPECIAL);
-	setCellType(end, SPECIAL);
+	//setCellType(start, SPECIAL);
+	//setCellType(end, SPECIAL);
 }

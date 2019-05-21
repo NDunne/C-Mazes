@@ -8,8 +8,8 @@ MazeGenerator::MazeGenerator(SDL_Window* sdlWin)
 	surface = SDL_GetWindowSurface(window);
 
 	//Fill the surface white
-	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
-	
+	SDL_FillRect(surface, NULL, white);
+
 	currentMaze = NULL;
 }
 

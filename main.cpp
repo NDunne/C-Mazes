@@ -59,16 +59,16 @@ int main(int argc, char** argv)
 	SDL_GetWindowSize(window, &width, &height);
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
-
-	Maze* m1 = mazeGen->newMaze(RECDIV);
+	
+	/*Maze* m1 = mazeGen->newMaze(PRIM);
 
 	SDL_Delay(2000);
 
 	m1 = mazeGen->newMaze(KRUSKAL);
 
 	SDL_Delay(2000);
-
-	m1 = mazeGen->newMaze(PRIM);
+	*/
+	Maze* m1 = mazeGen->newMaze(RECDIV);
 
 	delete m1;
 
