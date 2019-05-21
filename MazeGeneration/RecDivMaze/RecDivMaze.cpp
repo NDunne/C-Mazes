@@ -54,13 +54,12 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 		drawDelay();
 		srand(time(NULL));
 
-		int r;
+		int	r = rand() % 4;
 		NodeCoord choice;
 		nodeContainer remaining;
 		bool valid = true;
 		do
 		{
-			r = rand() % 4;
 			switch (r)
 			{
 				case 0:
@@ -76,14 +75,16 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 				case 2:
 					choice = { currentNodes.xStart,currentNodes.yLimit };
 					valid = (getCellType(getAdjNode(choice, SOUTH)) == UNVISITED || getCellType(getAdjNode(choice, WEST)) == UNVISITED);
-					remaining = { currentNodes.xStart,currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit - v };
+					remaining = { currentNodes.xStart + h,currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit - v };
 					break;
 				default:
 					choice = { currentNodes.xLimit,currentNodes.yLimit };
 					valid = (getCellType(getAdjNode(choice, SOUTH)) == UNVISITED || getCellType(getAdjNode(choice, EAST)) == UNVISITED);
-					remaining = { currentNodes.xStart + h,currentNodes.yStart,currentNodes.xLimit - h,currentNodes.yLimit - v };
+					remaining = { currentNodes.xStart,currentNodes.yStart,currentNodes.xLimit - h,currentNodes.yLimit - v };
 					break;
 			}
+
+			r = (r + 1) % 4;
 		} while (valid);
 
 		setCellType(choice, WALL);
