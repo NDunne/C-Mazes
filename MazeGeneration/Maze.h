@@ -33,12 +33,16 @@ const Uint32 red = 0xFF0000;
 const Uint32 blue = 0x0000FF;
 const Uint32 cyan = 0x00FFFF;
 
+const Uint32 redSingle = 0x10000;
+const Uint32 greenSingle = 0x100;
+const Uint32 blueSingle = 0x1;
+
 const int startSpeed = 710;
 
 const int X_NODES = 45;
 const int Y_NODES = 45;
 
-const int boxLen = 20;
+const int boxLen = 10;
 const int boxPad = 0;
 
 const int MAZE_PIXEL_WIDTH = (X_NODES * (boxLen + boxPad)) - boxPad; //550;
@@ -79,6 +83,9 @@ protected:
 	void drawCell(int x, int y, Uint32 colour, bool update);
 
 private:
+	Uint32 colorDif;
+	bool add;
+
 	int hPadding;
 
 	nodeTypeMap mazeNodes;

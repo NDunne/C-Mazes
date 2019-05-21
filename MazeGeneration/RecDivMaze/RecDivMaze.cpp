@@ -60,11 +60,11 @@ bool RecDivMaze::isTripleCorridor(nodeContainer currentNodes, int numX, int numY
 	//vertical
 	if (numX == 2 && numY == 3)
 	{
-		return ((getCellType({ currentNodes.xStart - 1,currentNodes.yStart + 1}) == UNVISITED) && (getCellType({ currentNodes.xLimit + 1, currentNodes.xStart - 1 }) == UNVISITED));
+		return ((getCellType({ currentNodes.xStart - 1,currentNodes.yStart + 1}) == UNVISITED) && (getCellType({ currentNodes.xLimit + 1, currentNodes.yLimit - 1 }) == UNVISITED));
 	}
 	else if (numX == 3 && numY == 2)
 	{
-		return ((getCellType({ currentNodes.xStart + 1, currentNodes.yStart - 1 }) == UNVISITED) && (getCellType({ currentNodes.xStart + 1, currentNodes.yLimit + 1 }) == UNVISITED));
+		return ((getCellType({ currentNodes.xStart + 1, currentNodes.yStart - 1 }) == UNVISITED) && (getCellType({ currentNodes.xLimit - 1, currentNodes.yLimit + 1 }) == UNVISITED));
 	}
 	return false;
 }
@@ -86,7 +86,7 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 		int v = (numX == 2 && numY == 3);
 
 		drawDelay();
-		srand(time(NULL));
+		srand((unsigned) time(NULL));
 
 		int	r = rand() % 4;
 		NodeCoord choice;
@@ -118,7 +118,7 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 					break;
 			}
 
-			r = (r + 1) % 4;
+			r = rand() % 4;
 		} while (valid);
 
 		setCellType(choice, WALL);

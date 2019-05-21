@@ -11,6 +11,9 @@ Maze::Maze(SDL_Window* w)
 	hPadding = (trueWindowWidth - MAZE_PIXEL_WIDTH) / 2;
 
 	drawSpeed = startSpeed;
+
+	colorDif = greenSingle;
+	add = true;
 }
 
 cellType Maze::getCellType(NodeCoord n)
@@ -26,10 +29,9 @@ void Maze::setCellType(NodeCoord n, cellType type, bool update)
 
 void Maze::drawDelay()
 {
-	return;
-	if (drawSpeed > 100)
+	if (drawSpeed > 20)
 	{
-		drawSpeed -= 10;
+		drawSpeed *= 0.9;
 	}
 	SDL_Delay(drawSpeed);
 }
@@ -50,11 +52,52 @@ void Maze::drawBase()
 
 void Maze::nextColor()
 {
-	Uint32 r = (color & 0xFF0000) >> 16;
-	Uint32 g = (color & 0xFF00) >> 8;
-	Uint32 b = (color & 0xFF);
+	Uint32 r = (color & red) >> 16;
+	Uint32 g = (color & green) >> 8;
+	Uint32 b = (color & blue);
 
-	if (r > 0 && b == 0) {
+	if (add)
+	{
+		if (colorDif == greenSingle && g == 0xFF)
+		{
+			colorDif = (Uint32)redSingle;
+			add = false;
+		}
+		else if (colorDif == redSingle && r == 0xFF)
+		{
+			colorDif = (Uint32)blueSingle;
+			add = false;
+		}
+		//Interesting: because blueSing is 1 it becomes a bool, and gets attached to the && rather than the ==
+		else if ((colorDif == blueSingle) && (b == 0xFF))
+		{
+			colorDif = (Uint32)greenSingle;
+			add = false;
+		}
+	}
+	else
+	{
+		if (colorDif == greenSingle && g == 0)
+		{
+			colorDif = redSingle;
+			add = true;
+		}
+		else if (colorDif == redSingle && r == 0)
+		{
+			colorDif = blueSingle;
+			add = true;
+		}
+		else if ((colorDif == blueSingle) && (b == 0))
+		{
+			colorDif = greenSingle;
+			add = true;
+		}
+	}
+
+	if (add) color += colorDif;
+	else color -= colorDif;
+
+	/*if (r > 0 && b == 0) {
 		color -= 0x10000;
 		color += 0x100;
 	}
@@ -65,7 +108,7 @@ void Maze::nextColor()
 	if (b > 0 && g == 0) {
 		color += 0x10000;
 		color -= 1;
-	}
+	}*/
 }
 
 //enum cellType { WALL, UNVISITED, VISITED, SPECIAL, SELECTED, VALID, INVALID };

@@ -39,7 +39,7 @@ void KruskalMaze::generate()
 
 	std::vector<NodePair> edges = allEdges();
 
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	unsigned seed = (unsigned) std::chrono::system_clock::now().time_since_epoch().count();
 
 	auto rng = std::default_random_engine(seed);
 	std::shuffle(std::begin(edges), std::end(edges), rng);
