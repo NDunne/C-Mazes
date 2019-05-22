@@ -7,7 +7,7 @@ void MSTMaze::addEdge(NodeCoord A, NodeCoord B)
 {
 	nextColor();
 	mazeEdges.addEdge(A, B);
-	drawEdge(A, B, UNVISITED);//VALID);
+	drawEdge(A, B, VALID);
 }
 
 void MSTMaze::drawEdge(NodeCoord A, NodeCoord B, cellType c)

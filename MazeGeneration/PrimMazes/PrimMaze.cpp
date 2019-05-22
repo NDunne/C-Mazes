@@ -2,6 +2,8 @@
 
 PrimMaze::PrimMaze(SDL_Window* w) : MSTMaze(w)
 {
+	color = red;
+	colorDif = greenSingle;
 	generate();
 }
 
@@ -42,9 +44,7 @@ void PrimMaze::generate()
 		{
 			drawEdge(A, B, VALID);
 		}
-
-		else
-		if (!DFS(A, B))
+		else if (!DFS(A, B))
 		{
 			//LOG std::cout << "\n no path";
 			addEdge(currentEdge);

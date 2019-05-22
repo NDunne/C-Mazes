@@ -24,8 +24,10 @@ protected:
 
 	bool isTripleCorridor(nodeContainer currentNodes, int numX, int numY);
 
-	bool drawHWall(int x1, int x2, int y);
+	bool addHWall(int x1, int x2, int y);
+	void drawHWall(int x1, int x2, int y, int door, Uint32 type);
 
-	bool drawVWall(int x, int y1, int y2);
+	bool addVWall(int x, int y1, int y2);
+	void drawVWall(int x, int y1, int y2, int door, Uint32 type);
 };
 

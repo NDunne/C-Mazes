@@ -19,9 +19,9 @@ const enum cellType : Uint32
 	UNVISITED,
 	VISITED = 0x303030,
 	//SPECIAL = 0x00FF00,
-	SELECTED = 0xF1F1F1,
-	VALID = 0x000000,
-	INVALID = 0xF5F5F5
+	SELECTED = 0xC0C0FF,
+	VALID = 0xC0FFC0,
+	INVALID = 0xFFC0C0
 };
 
 struct node
@@ -38,17 +38,6 @@ using nodeTypeMap = std::map<NodeCoord, node>;
 using NodePair = std::pair<NodeCoord, NodeCoord>;
 
 const NodeCoord nullNode = { -1, -1 };
-/*
-const Uint32 black = 0x0;
-const Uint32 grey = 0x303030;
-const Uint32 white = 0xFFFFFF;
-const Uint32 light = 0xF0F0F0;
-
-const Uint32 red = 0xFF0000;
-const Uint32 blue = 0x0000FF;
-const Uint32 green = 0x00FF00;
-const Uint32 cyan = 0x00FFFF;
-*/
 
 const Uint32 red = 0xFF0000;
 const Uint32 blue = 0x0000FF;
@@ -63,7 +52,7 @@ const int startSpeed = 710;
 const int X_NODES = 45;
 const int Y_NODES = 45;
 
-const int boxLen = 2;
+const int boxLen = 10;
 const int boxPad = 0;
 
 const int MAZE_PIXEL_WIDTH = (X_NODES * (boxLen + boxPad)) - boxPad; //550;
@@ -97,14 +86,14 @@ protected:
 
 	virtual void generate() = 0;
 
-	Uint32 color = red;
+	Uint32 color = blue;
+	Uint32 colorDif = redSingle;
 
 	void nextColor();
 
 	void drawCell(int x, int y, Uint32 colour, bool update);
 
 private:
-	Uint32 colorDif = greenSingle;
 	bool add = true;
 
 	int hPadding;

@@ -20,16 +20,16 @@ node Maze::getCellType(NodeCoord n)
 
 void Maze::setCellType(NodeCoord n, Uint32 type, bool update)
 {	
-	mazeNodes[n] = {type, (mazeNodes[n].color == 0x0)? color: mazeNodes[n].color };
+	mazeNodes[n] = {type, (type != WALL && mazeNodes[n].color == 0x0)? color: mazeNodes[n].color };
 
 	drawCell(n, (type==UNVISITED)? color:type, update);
 }
 
 void Maze::drawDelay()
 {
-	if (drawSpeed > 20)
+	if (drawSpeed > 10)
 	{
-		drawSpeed = (int) drawSpeed*0.9;
+		drawSpeed = (int) drawSpeed*0.95;
 	}
 	SDL_Delay(drawSpeed);
 }
