@@ -14,23 +14,23 @@ void MSTMaze::drawEdge(NodeCoord A, NodeCoord B, cellType c)
 {
 	NodeCoord midNode = { (A.first + B.first) / 2, (A.second + B.second) / 2 };
 
-	setCellType(A, c);
-	setCellType(midNode, c);
-	setCellType(B, c);
+	setCellType(A, c, false);
+	setCellType(midNode, c, false);
+	setCellType(B, c, true);
 	drawDelay();
 
 	if (c == VALID)
 	{
-		setCellType(A, UNVISITED);
-		setCellType(midNode, UNVISITED);
-		setCellType(B, UNVISITED);
+		setCellType(A, UNVISITED, false);
+		setCellType(midNode, UNVISITED, false);
+		setCellType(B, UNVISITED, true);
 		drawDelay();
 	}
 	else if (c == INVALID)
 	{
-		setCellType(A, UNVISITED);
-		setCellType(midNode, WALL);
-		setCellType(B, UNVISITED);
+		setCellType(A, getCellType(A).color, false);
+		setCellType(midNode, WALL, false);
+		setCellType(B, getCellType(B).color, true);
 		drawDelay();
 	}
 }

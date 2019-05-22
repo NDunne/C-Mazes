@@ -37,13 +37,13 @@ void PrimMaze::generate()
 		NodeCoord A = currentEdge.first;
 		NodeCoord B = currentEdge.second;
 
-		//drawEdge(A, B, SELECTED);
-		/*if (mazeEdges.getEdge(A, B))
+		drawEdge(A, B, SELECTED);
+		if (mazeEdges.getEdge(A, B))
 		{
 			drawEdge(A, B, VALID);
 		}
 
-		else*/
+		else
 		if (!DFS(A, B))
 		{
 			//LOG std::cout << "\n no path";
@@ -65,10 +65,10 @@ void PrimMaze::generate()
 				}
 			}
 		}
-		/*else
+		else
 		{
 			drawEdge(A, B, INVALID);
-		}*/
+		}
 
 		edges.erase(edges.begin() + currentIndex);
 	}

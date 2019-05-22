@@ -60,11 +60,11 @@ bool RecDivMaze::isTripleCorridor(nodeContainer currentNodes, int numX, int numY
 	//vertical
 	if (numX == 2 && numY == 3)
 	{
-		return ((getCellType({ currentNodes.xStart - 1,currentNodes.yStart + 1}) == UNVISITED) && (getCellType({ currentNodes.xLimit + 1, currentNodes.yLimit - 1 }) == UNVISITED));
+		return ((getCellType({ currentNodes.xStart - 1,currentNodes.yStart + 1}).type == UNVISITED) && (getCellType({ currentNodes.xLimit + 1, currentNodes.yLimit - 1 }).type == UNVISITED));
 	}
 	else if (numX == 3 && numY == 2)
 	{
-		return ((getCellType({ currentNodes.xStart + 1, currentNodes.yStart - 1 }) == UNVISITED) && (getCellType({ currentNodes.xLimit - 1, currentNodes.yLimit + 1 }) == UNVISITED));
+		return ((getCellType({ currentNodes.xStart + 1, currentNodes.yStart - 1 }).type == UNVISITED) && (getCellType({ currentNodes.xLimit - 1, currentNodes.yLimit + 1 }).type == UNVISITED));
 	}
 	return false;
 }
@@ -98,22 +98,22 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 			{
 				case 0:
 					choice = {currentNodes.xStart,currentNodes.yStart};
-					valid = (getCellType(getAdjNode(choice,NORTH)) == UNVISITED || getCellType(getAdjNode(choice, WEST)) == UNVISITED);
+					valid = (getCellType(getAdjNode(choice,NORTH)).type == UNVISITED || getCellType(getAdjNode(choice, WEST)).type == UNVISITED);
 					remaining = { currentNodes.xStart + h,currentNodes.yStart + v,currentNodes.xLimit,currentNodes.yLimit };
 					break;
 				case 1:
 					choice = { currentNodes.xLimit,currentNodes.yStart };
-					valid = (getCellType(getAdjNode(choice, NORTH)) == UNVISITED || getCellType(getAdjNode(choice, EAST)) == UNVISITED);
+					valid = (getCellType(getAdjNode(choice, NORTH)).type == UNVISITED || getCellType(getAdjNode(choice, EAST)).type == UNVISITED);
 					remaining = { currentNodes.xStart,currentNodes.yStart + v,currentNodes.xLimit - h,currentNodes.yLimit };
 					break;
 				case 2:
 					choice = { currentNodes.xStart,currentNodes.yLimit };
-					valid = (getCellType(getAdjNode(choice, SOUTH)) == UNVISITED || getCellType(getAdjNode(choice, WEST)) == UNVISITED);
+					valid = (getCellType(getAdjNode(choice, SOUTH)).type == UNVISITED || getCellType(getAdjNode(choice, WEST)).type == UNVISITED);
 					remaining = { currentNodes.xStart + h,currentNodes.yStart,currentNodes.xLimit,currentNodes.yLimit - v };
 					break;
 				default:
 					choice = { currentNodes.xLimit,currentNodes.yLimit };
-					valid = (getCellType(getAdjNode(choice, SOUTH)) == UNVISITED || getCellType(getAdjNode(choice, EAST)) == UNVISITED);
+					valid = (getCellType(getAdjNode(choice, SOUTH)).type == UNVISITED || getCellType(getAdjNode(choice, EAST)).type == UNVISITED);
 					remaining = { currentNodes.xStart,currentNodes.yStart,currentNodes.xLimit - h,currentNodes.yLimit - v };
 					break;
 			}
@@ -190,8 +190,8 @@ bool RecDivMaze::drawHWall(int x1, int x2, int y)
 {
 	int door;
 
-	bool startEdgeIsDoor = getCellType({ x1 - 1,y }) != WALL;
-	bool endEdgeIsDoor = getCellType({ x2 + 1,y }) != WALL;
+	bool startEdgeIsDoor = getCellType({ x1 - 1,y }).type != WALL;
+	bool endEdgeIsDoor = getCellType({ x2 + 1,y }).type != WALL;
 
 	if (startEdgeIsDoor && endEdgeIsDoor)
 	{
@@ -227,8 +227,8 @@ bool RecDivMaze::drawVWall(int x, int y1, int y2)
 {
 	int door;
 
-	bool startEdgeIsDoor = getCellType({ x,y1 -1 }) != WALL;
-	bool endEdgeIsDoor = getCellType({ x,y2 + 1 }) != WALL;
+	bool startEdgeIsDoor = getCellType({ x,y1 -1 }).type != WALL;
+	bool endEdgeIsDoor = getCellType({ x,y2 + 1 }).type != WALL;
 
 	if (startEdgeIsDoor && endEdgeIsDoor)
 	{
