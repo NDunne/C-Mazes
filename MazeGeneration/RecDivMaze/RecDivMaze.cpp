@@ -2,6 +2,8 @@
 
 //1 - 3 - 3 - 1 deadlock still
 
+//newRecDiv
+
 RecDivMaze::RecDivMaze(SDL_Window* w, DrawPosition dp) : Maze(w, dp)
 {
 	//color = blue;
