@@ -4,6 +4,8 @@ KruskalMaze::KruskalMaze(SDL_Window* w) :MSTMaze(w)
 	color = green;
 	colorDif = blueSingle;
 	generate();
+
+	finish();
 }
 
 std::vector<NodePair> KruskalMaze::allEdges()

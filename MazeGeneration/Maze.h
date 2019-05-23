@@ -16,9 +16,8 @@
 const enum cellType : Uint32 
 { 
 	WALL = 0x0, 
-	UNVISITED,
+	UNVISITED = 0xF0F0F0,
 	VISITED = 0x303030,
-	//SPECIAL = 0x00FF00,
 	SELECTED = 0xC0C0FF,
 	VALID = 0xC0FFC0,
 	INVALID = 0xFFC0C0
@@ -52,13 +51,13 @@ const int startSpeed = 710;
 const int X_NODES = 45;
 const int Y_NODES = 45;
 
-const int boxLen = 10;
+const int boxLen = 2;
 const int boxPad = 0;
 
 const int MAZE_PIXEL_WIDTH = (X_NODES * (boxLen + boxPad)) - boxPad; //550;
 const int MAZE_PIXEL_HEIGHT = (Y_NODES * (boxLen + boxPad)) - boxPad;
 
-const int MAZE_PADDING = (4 * boxPad);
+const int MAZE_PADDING = (2 + (2 * boxPad));
 
 class Maze
 {
@@ -85,6 +84,8 @@ protected:
 	virtual void drawBase();
 
 	virtual void generate() = 0;
+
+	void finish();
 
 	Uint32 color = blue;
 	Uint32 colorDif = redSingle;

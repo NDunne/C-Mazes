@@ -7,6 +7,8 @@ RecDivMaze::RecDivMaze(SDL_Window* w) : Maze(w)
 	color = blue;
 	colorDif = redSingle;
 	generate();
+
+	finish();
 }
 
 void RecDivMaze::drawContainer(nodeContainer bounds)

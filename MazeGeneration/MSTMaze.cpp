@@ -28,9 +28,9 @@ void MSTMaze::drawEdge(NodeCoord A, NodeCoord B, cellType c)
 	}
 	else if (c == INVALID)
 	{
-		setCellType(A, getCellType(A).color, false);
+		setCellType(A, UNVISITED, false);
 		setCellType(midNode, WALL, false);
-		setCellType(B, getCellType(B).color, true);
+		setCellType(B, UNVISITED, true);
 		drawDelay();
 	}
 }

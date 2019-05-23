@@ -22,11 +22,12 @@ void Maze::setCellType(NodeCoord n, Uint32 type, bool update)
 {	
 	mazeNodes[n] = {type, (type != WALL && mazeNodes[n].color == 0x0)? color: mazeNodes[n].color };
 
-	drawCell(n, (type==UNVISITED)? color:type, update);
+	drawCell(n, (type==UNVISITED)? mazeNodes[n].color:type, update);
 }
 
 void Maze::drawDelay()
 {
+	return;
 	if (drawSpeed > 10)
 	{
 		drawSpeed = (int) drawSpeed*0.95;
@@ -145,4 +146,20 @@ NodeCoord Maze::getAdjNode(int x, int y, direction dir, int dist)
 	}
 
 	return nullNode;
+}
+
+void Maze::finish()
+{
+	SDL_Delay(2000);
+
+	drawCell(1, 0, UNVISITED, false);
+	drawCell((X_NODES-2), (Y_NODES-1), UNVISITED, false);
+	for (int i = 1; i < (X_NODES - 1); i++)
+	{
+		for (int j = 1; j < (Y_NODES - 1); j++)
+		{
+			if (getCellType({i,j}).type == UNVISITED) drawCell(i, j, UNVISITED, false);
+		}
+	}
+	SDL_UpdateWindowSurface(window);
 }

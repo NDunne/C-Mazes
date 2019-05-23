@@ -5,6 +5,8 @@ PrimMaze::PrimMaze(SDL_Window* w) : MSTMaze(w)
 	color = red;
 	colorDif = greenSingle;
 	generate();
+
+	finish();
 }
 
 void PrimMaze::generate()

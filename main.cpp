@@ -9,8 +9,8 @@
 
 /*
 TODO
-- Kruskals generator
-- Recursive division generator
+- Random walk generator
+- multi thread - draw all 4 at once
 */
 
 SDL_Window* initSDL()
@@ -60,13 +60,13 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 	
-	Maze* m1 = mazeGen->newMaze(RECDIV);
+	Maze* m1 = mazeGen->newMaze(PRIM);
 
-	SDL_Delay(2000);
+	SDL_Delay(4000);
 
 	m1 = mazeGen->newMaze(KRUSKAL);
 
-	SDL_Delay(2000);
+	SDL_Delay(4000);
 	
 	m1 = mazeGen->newMaze(RECDIV);
 
@@ -90,8 +90,6 @@ int main(int argc, char** argv)
 	delete mazeGen;
 
 	close(window);
-
-	_CrtDumpMemoryLeaks();
 
 	return 0;
 }
