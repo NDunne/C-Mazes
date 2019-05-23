@@ -1,8 +1,8 @@
 #pragma once
 
-#include "PrimMazes\PrimMaze.h"
+#include "PrimMaze\PrimMaze.h"
 
-#include "KruskalMazes\KruskalMaze.h"
+#include "KruskalMaze\KruskalMaze.h"
 
 #include "RecDivMaze\RecDivMaze.h"
 

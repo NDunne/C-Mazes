@@ -27,8 +27,7 @@ void Maze::setCellType(NodeCoord n, Uint32 type, bool update)
 
 void Maze::drawDelay()
 {
-	return;
-	if (drawSpeed > 10)
+	if (drawSpeed > 5)
 	{
 		drawSpeed = (int) drawSpeed*0.95;
 	}
