@@ -6,8 +6,9 @@
 
 #include "RecDivMaze\RecDivMaze.h"
 
+#include "AldousBroderMaze\AldousBroderMaze.h"
 
-enum MazeType { PRIM, KRUSKAL, RECDIV };
+enum MazeType { PRIM, KRUSKAL, RECDIV, ALDBRO };
 
 class MazeGenerator
 {

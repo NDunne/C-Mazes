@@ -4,6 +4,7 @@
 
 #include <string>
 #include <stack>
+#include <vector>
 
 using NodeAdj = std::map < NodeCoord, int > ;
 using adjacency = std::map< NodeCoord, NodeAdj >;

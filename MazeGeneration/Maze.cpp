@@ -18,7 +18,7 @@ node Maze::getCellType(NodeCoord n)
 	return mazeNodes[n];
 }
 
-void Maze::setCellType(NodeCoord n, Uint32 type, bool update)
+void Maze::setCellType(NodeCoord n, cellType type, bool update)
 {	
 	mazeNodes[n] = {type, (type != WALL && mazeNodes[n].color == 0x0)? color: mazeNodes[n].color };
 

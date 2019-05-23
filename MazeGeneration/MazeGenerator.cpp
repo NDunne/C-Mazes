@@ -29,6 +29,10 @@ Maze* MazeGenerator::newMaze(MazeType t)
 	{
 		currentMaze = new KruskalMaze(window);
 	}
+	else if (t == ALDBRO)
+	{
+		currentMaze = new AldousBroderMaze(window);
+	}
 	else
 	{
 		currentMaze = new RecDivMaze(window);

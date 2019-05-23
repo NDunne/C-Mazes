@@ -6,6 +6,9 @@ RecDivMaze::RecDivMaze(SDL_Window* w) : Maze(w)
 {
 	color = blue;
 	colorDif = redSingle;
+
+	srand((unsigned)time(NULL));
+
 	generate();
 
 	finish();
@@ -89,7 +92,6 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 		int v = (numX == 2 && numY == 3);
 
 		drawDelay();
-		srand((unsigned) time(NULL));
 
 		int	r = rand() % 4;
 		NodeCoord choice;
@@ -130,8 +132,6 @@ void RecDivMaze::splitContainer(nodeContainer currentNodes)
 	}
 	else
 	{
-		srand((unsigned)time(0));
-
 		//Vertical or horizontal wall
 
 		//choice is the index of the wall
@@ -222,7 +222,7 @@ bool RecDivMaze::addHWall(int x1, int x2, int y)
 	return true;
 }
 
-void RecDivMaze::drawHWall(int x1, int x2, int y, int door, Uint32 type)
+void RecDivMaze::drawHWall(int x1, int x2, int y, int door, cellType type)
 {
 	for (int i = x1; i <= x2; i++)
 	{
@@ -297,7 +297,7 @@ bool RecDivMaze::addVWall(int x, int y1, int y2)
 	return true;
 }
 
-void RecDivMaze::drawVWall(int x, int y1, int y2, int door, Uint32 type)
+void RecDivMaze::drawVWall(int x, int y1, int y2, int door, cellType type)
 {
 	for (int i = y1; i <= y2; i++)
 	{

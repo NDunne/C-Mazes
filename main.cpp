@@ -60,7 +60,7 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 	
-	Maze* m1 = mazeGen->newMaze(PRIM);
+	Maze* m1 = mazeGen->newMaze(ALDBRO);
 
 	SDL_Delay(4000);
 

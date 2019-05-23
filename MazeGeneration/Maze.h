@@ -25,7 +25,7 @@ const enum cellType : Uint32
 
 struct node
 {
-	Uint32 type;
+	cellType type;
 	Uint32 color;
 };
 
@@ -72,8 +72,8 @@ public:
 	node getCellType(NodeCoord n);
 	node getCellType(int x, int y) { return getCellType(x, y); }
 
-	void setCellType(NodeCoord n, Uint32 type, bool update=true);
-	void setCellType(int x, int y, Uint32 type, bool update=true) { return setCellType({ x, y }, type, update); }
+	void setCellType(NodeCoord n, cellType type, bool update=true);
+	void setCellType(int x, int y, cellType type, bool update=true) { return setCellType({ x, y }, type, update); }
 
 protected:
 	SDL_Window* window;
