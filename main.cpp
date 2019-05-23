@@ -11,7 +11,9 @@
 
 /*
 TODO
-- multi thread - draw all 4 at once
+- efficiency? get rid of padding and fill multiple cells at once?
+- solvers
+- text to show algorithm used
 */
 bool quit = false;
 

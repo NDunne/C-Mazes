@@ -153,9 +153,9 @@ bool RecDivMaze::addHWall(int x1, int x2, int y)
 	}
 	else
 	{
-		int randMax = (1 + (x2 - x1));
+		int randMax = (1 + (x2 - x1)/2);
 
-		door = rand() % randMax;
+		door = 2 * (rand() % randMax);
 	}
 
 	drawHWall(x1, x2, y, door, VALID);
@@ -230,9 +230,9 @@ bool RecDivMaze::addVWall(int x, int y1, int y2)
 	}
 	else
 	{
-		int randMax = (1 + (y2 - y1));
+		int randMax = (1 + (y2 - y1) / 2);
 
-		door = rand() % randMax;
+		door = 2 * (rand() % randMax);
 	}
 	drawVWall(x, y1, y2, door, VALID);
 	return true;
