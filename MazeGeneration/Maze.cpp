@@ -20,8 +20,8 @@ node Maze::getCellType(NodeCoord n)
 }
 
 void Maze::setCellType(NodeCoord n, cellType type, bool update)
-{	
-	mazeNodes[n] = {type, (type != WALL && mazeNodes[n].color == 0x0)? color: mazeNodes[n].color };
+{
+	mazeNodes[n] = { type, (type != WALL && mazeNodes[n].color == 0x0) ? color : mazeNodes[n].color };
 
 	drawCell(n, (type==UNVISITED)? mazeNodes[n].color:type, update);
 }
@@ -31,7 +31,7 @@ void Maze::drawDelay()
 	return;
 	if (drawSpeed > 5)
 	{
-		drawSpeed = (int) drawSpeed*0.95;
+		drawSpeed = (int) (drawSpeed*0.95);
 	}
 	SDL_Delay(drawSpeed);
 }
@@ -101,12 +101,14 @@ void Maze::nextColor()
 //enum cellType { WALL, UNVISITED, VISITED, SPECIAL, SELECTED, VALID, INVALID };
 void Maze::drawCell(NodeCoord n, Uint32 colour, bool update)
 {
-	
 	return drawCell(n.first, n.second, colour, update);
 }
 
 void Maze::drawCell(int x, int y, Uint32 colour, bool update)
 {
+
+	//mazeNodes[{x, y }].color = colour;
+
 	SDL_Rect rect = { hPadding + x * (boxLen + boxPad), vPadding + y * (boxLen + boxPad), boxLen, boxLen };
 	SDL_FillRect(surface, &rect, colour);
 

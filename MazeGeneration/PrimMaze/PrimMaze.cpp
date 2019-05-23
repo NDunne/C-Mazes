@@ -2,11 +2,8 @@
 
 PrimMaze::PrimMaze(SDL_Window* w, DrawPosition dp) : MSTMaze(w, dp)
 {
-	color = red;
-	colorDif = greenSingle;
-	generate();
-
-	finish();
+	//color = red;
+	//colorDif = greenSingle;
 }
 
 void PrimMaze::generate()
@@ -75,6 +72,5 @@ void PrimMaze::generate()
 		edges.erase(edges.begin() + currentIndex);
 	}
 
-	//setCellType(start, SPECIAL);
-	//setCellType(end, SPECIAL);
+	finish();
 }

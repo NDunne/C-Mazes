@@ -7,9 +7,9 @@ class AldousBroderMaze : public MSTMaze
 public:
 	AldousBroderMaze(SDL_Window* w, DrawPosition dp);
 
-private:
 	void generate();
 
+private:
 	bool isNullNode(const NodeCoord n);
 	NodeCoord randomNeighbor(NodeCoord n, NodeCoord origin);
 };

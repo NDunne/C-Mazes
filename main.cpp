@@ -3,15 +3,17 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
+#include <thread>
+
 #include <iostream>
 
 #include "MazeGeneration\MazeGenerator.h"
 
 /*
 TODO
-- Random walk generator
 - multi thread - draw all 4 at once
 */
+bool quit = false;
 
 SDL_Window* initSDL()
 {
@@ -48,6 +50,21 @@ void close(SDL_Window* window)
 	SDL_Quit();
 }
 
+int testFunction(void* data)
+{
+	std::cout << "Hi I'm a thread";
+
+	return 0;
+}
+
+int generate(void* m)
+{
+	Maze* maze = (Maze*)m;
+	maze->generate();
+
+	return 0;
+}
+
 int main(int argc, char** argv)
 {
 	SDL_Window* window = initSDL();
@@ -59,26 +76,25 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 	
+	Maze* m4 = mazeGen->newMaze(RECDIV, BR);
+
 	Maze* m1 = mazeGen->newMaze(PRIM, TL);
 
-	SDL_Delay(4000);
-
 	Maze* m2 = mazeGen->newMaze(KRUSKAL, TR);
-
-	SDL_Delay(4000);
 	
 	Maze* m3 = mazeGen->newMaze(ALDBRO, BL);
 
-	SDL_Delay(4000);
+	std::thread t1(generate, m1);
+	std::thread t2(generate, m2);
+	std::thread t3(generate, m3);
+	std::thread t4(generate, m4);
 
-	Maze* m4 = mazeGen->newMaze(RECDIV, BR);
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
 
-	delete m1;
-	delete m2;
-	delete m3;
-	delete m4;
-
-	bool quit = false;
+	std::cout << "done";
 
 	SDL_Event e;
 
@@ -92,10 +108,16 @@ int main(int argc, char** argv)
 			}
 		}
 	}
-	
+
+	delete m1;
+	delete m2;
+	delete m3;
+	delete m4; 
+
 	delete mazeGen;
 
 	close(window);
 
 	return 0;
 }
+

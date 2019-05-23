@@ -2,14 +2,10 @@
 
 AldousBroderMaze::AldousBroderMaze(SDL_Window* w, DrawPosition dp) : MSTMaze(w, dp)
 {
-	color = blue;
-	colorDif = redSingle;
+	//color = blue;
+	//colorDif = redSingle;
 
 	srand((unsigned)time(NULL));
-
-	generate();
-
-	finish();
 }
 
 bool AldousBroderMaze::isNullNode(const NodeCoord n)
@@ -68,4 +64,6 @@ void AldousBroderMaze::generate()
 		current = next;
 	} 
 	while (visited < nodes);
+
+	finish();
 }

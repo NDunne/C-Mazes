@@ -7,9 +7,9 @@ class KruskalMaze : public MSTMaze
 public:
 	KruskalMaze(SDL_Window* w, DrawPosition dp);
 
-protected:
 	void generate();
-	
+
+protected:
 	std::vector<NodePair> allEdges();
 };
 

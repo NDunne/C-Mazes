@@ -48,10 +48,10 @@ const Uint32 blueSingle = 0x1;
 
 const int startSpeed = 500;
 
-const int X_NODES = 45;
-const int Y_NODES = 45;
+const int X_NODES = 35;
+const int Y_NODES = 35;
 
-const int boxLen = 2;
+const int boxLen = 5;
 const int boxPad = 0;
 
 const int MAZE_PIXEL_WIDTH = (X_NODES * (boxLen + boxPad)) - boxPad; //550;
@@ -80,6 +80,8 @@ public:
 	void setCellType(NodeCoord n, cellType type, bool update=true);
 	void setCellType(int x, int y, cellType type, bool update=true) { return setCellType({ x, y }, type, update); }
 
+	virtual void generate() = 0;
+
 protected:
 	SDL_Window* window;
 	SDL_Surface* surface;
@@ -87,8 +89,6 @@ protected:
 	void drawDelay();
 
 	virtual void drawBase();
-
-	virtual void generate() = 0;
 
 	void finish();
 

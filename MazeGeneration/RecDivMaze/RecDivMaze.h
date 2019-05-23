@@ -13,9 +13,9 @@ class RecDivMaze : public Maze
 public:
 	RecDivMaze(SDL_Window* w, DrawPosition dp);
 
-protected:
 	void generate();
 
+protected:
 	void drawContainer(nodeContainer bounds);
 
 	virtual void drawBase();

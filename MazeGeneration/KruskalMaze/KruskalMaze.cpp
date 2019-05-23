@@ -1,11 +1,8 @@
 #include "KruskalMaze.h"
 KruskalMaze::KruskalMaze(SDL_Window* w, DrawPosition dp) :  MSTMaze(w, dp)
 {
-	color = green;
-	colorDif = blueSingle;
-	generate();
-
-	finish();
+	//color = green;
+	//colorDif = blueSingle;
 }
 
 std::vector<NodePair> KruskalMaze::allEdges()
@@ -65,6 +62,5 @@ void KruskalMaze::generate()
 		}
 	}
 
-	//setCellType(start, SPECIAL);
-	//setCellType(end, SPECIAL);
+	finish();
 }

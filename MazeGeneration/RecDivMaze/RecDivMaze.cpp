@@ -4,14 +4,10 @@
 
 RecDivMaze::RecDivMaze(SDL_Window* w, DrawPosition dp) : Maze(w, dp)
 {
-	color = blue;
-	colorDif = redSingle;
+	//color = blue;
+	//colorDif = redSingle;
 
 	srand((unsigned)time(NULL));
-
-	generate();
-
-	finish();
 }
 
 void RecDivMaze::drawContainer(nodeContainer bounds)
@@ -55,6 +51,7 @@ void RecDivMaze::generate()
 	
 	splitContainer({ 1, 1, X_NODES-2, Y_NODES-2 }); //Coordinates are inclusive
 
+	finish();
 }
 
 //a 1 3 3 1 structure is a special case
@@ -233,6 +230,7 @@ void RecDivMaze::drawHWall(int x1, int x2, int y, int door, cellType type)
 		else
 		{
 			setCellType(i, y, UNVISITED, false);
+			drawCell(i, y, color, false);
 		}
 	}
 	SDL_UpdateWindowSurface(window);
@@ -308,6 +306,7 @@ void RecDivMaze::drawVWall(int x, int y1, int y2, int door, cellType type)
 		else
 		{
 			setCellType(x, i, UNVISITED, false);
+			drawCell(x, i, color, false);
 		}
 	}
 	SDL_UpdateWindowSurface(window);
@@ -324,6 +323,7 @@ void RecDivMaze::drawVWall(int x, int y1, int y2, int door, cellType type)
 			else
 			{
 				setCellType(x, i,UNVISITED, false);
+				drawCell(x, i, color, false);
 			}
 		}
 		SDL_UpdateWindowSurface(window);
