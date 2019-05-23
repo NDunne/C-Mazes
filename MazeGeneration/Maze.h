@@ -48,8 +48,8 @@ const Uint32 blueSingle = 0x1;
 
 const int startSpeed = 500;
 
-const int X_NODES = 35;
-const int Y_NODES = 35;
+const int X_NODES = 45;
+const int Y_NODES = 45;
 
 const int boxLen = 5;
 const int boxPad = 0;

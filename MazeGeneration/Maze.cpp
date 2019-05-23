@@ -28,11 +28,15 @@ void Maze::setCellType(NodeCoord n, cellType type, bool update)
 
 void Maze::drawDelay()
 {
-	return;
-	if (drawSpeed > 5)
+	if (drawSpeed > 100)
 	{
-		drawSpeed = (int) (drawSpeed*0.95);
+		drawSpeed = (int)(drawSpeed * 0.9);
 	}
+	if (drawSpeed > 1)
+	{
+		drawSpeed = (int) (drawSpeed*0.99);
+	}
+
 	SDL_Delay(drawSpeed);
 }
 
