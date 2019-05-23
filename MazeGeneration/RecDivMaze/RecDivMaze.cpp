@@ -2,7 +2,7 @@
 
 //1 - 3 - 3 - 1 deadlock still
 
-RecDivMaze::RecDivMaze(SDL_Window* w) : Maze(w)
+RecDivMaze::RecDivMaze(SDL_Window* w, DrawPosition dp) : Maze(w, dp)
 {
 	color = blue;
 	colorDif = redSingle;

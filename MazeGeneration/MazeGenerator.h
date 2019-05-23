@@ -10,13 +10,15 @@
 
 enum MazeType { PRIM, KRUSKAL, RECDIV, ALDBRO };
 
+
+
 class MazeGenerator
 {
 public:
 	MazeGenerator(SDL_Window* sdlWin);
 	~MazeGenerator();
 
-	Maze* newMaze(MazeType t);
+	Maze* newMaze(MazeType t, DrawPosition dp);
 
 	Maze* getMaze();
 

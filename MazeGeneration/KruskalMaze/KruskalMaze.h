@@ -5,7 +5,7 @@
 class KruskalMaze : public MSTMaze
 {
 public:
-	KruskalMaze(SDL_Window* w);
+	KruskalMaze(SDL_Window* w, DrawPosition dp);
 
 protected:
 	void generate();

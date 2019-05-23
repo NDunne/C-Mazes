@@ -5,7 +5,7 @@
 class AldousBroderMaze : public MSTMaze
 {
 public:
-	AldousBroderMaze(SDL_Window* w);
+	AldousBroderMaze(SDL_Window* w, DrawPosition dp);
 
 private:
 	void generate();

@@ -1,6 +1,6 @@
 #include "PrimMaze.h"
 
-PrimMaze::PrimMaze(SDL_Window* w) : MSTMaze(w)
+PrimMaze::PrimMaze(SDL_Window* w, DrawPosition dp) : MSTMaze(w, dp)
 {
 	color = red;
 	colorDif = greenSingle;

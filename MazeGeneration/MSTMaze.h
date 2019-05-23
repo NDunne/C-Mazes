@@ -5,7 +5,7 @@
 class MSTMaze : public Maze
 {
 public:
-	MSTMaze(SDL_Window* w);
+	MSTMaze(SDL_Window* w, DrawPosition dp);
 
 protected:
 	MazeGraph mazeEdges;

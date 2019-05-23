@@ -5,7 +5,7 @@
 class PrimMaze : public MSTMaze
 {
 public:
-	PrimMaze(SDL_Window* w);
+	PrimMaze(SDL_Window* w, DrawPosition dp);
 
 private:
 	void generate();

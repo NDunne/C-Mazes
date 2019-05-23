@@ -28,8 +28,7 @@ SDL_Window* initSDL()
 	{
 		//Create window
 		//Parameters: Name, xPos, yPos, xLen, yLen
-		window = SDL_CreateWindow("SDL MAZE", 10, 40, MAZE_PIXEL_WIDTH + (2*MAZE_PADDING), MAZE_PIXEL_HEIGHT + (2*MAZE_PADDING), SDL_WINDOW_SHOWN);
-		if (window == NULL)
+		window = SDL_CreateWindow("SDL MAZE", 10, 40, 2*MAZE_FRAME_WIDTH, 2*MAZE_FRAME_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -60,17 +59,24 @@ int main(int argc, char** argv)
 
 	MazeGenerator* mazeGen = new MazeGenerator(window);
 	
-	Maze* m1 = mazeGen->newMaze(ALDBRO);
+	Maze* m1 = mazeGen->newMaze(PRIM, TL);
 
 	SDL_Delay(4000);
 
-	m1 = mazeGen->newMaze(KRUSKAL);
+	Maze* m2 = mazeGen->newMaze(KRUSKAL, TR);
 
 	SDL_Delay(4000);
 	
-	m1 = mazeGen->newMaze(RECDIV);
+	Maze* m3 = mazeGen->newMaze(ALDBRO, BL);
+
+	SDL_Delay(4000);
+
+	Maze* m4 = mazeGen->newMaze(RECDIV, BR);
 
 	delete m1;
+	delete m2;
+	delete m3;
+	delete m4;
 
 	bool quit = false;
 

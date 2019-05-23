@@ -1,6 +1,6 @@
 #include "AldousBroderMaze.h"
 
-AldousBroderMaze::AldousBroderMaze(SDL_Window* w) : MSTMaze(w)
+AldousBroderMaze::AldousBroderMaze(SDL_Window* w, DrawPosition dp) : MSTMaze(w, dp)
 {
 	color = blue;
 	colorDif = redSingle;

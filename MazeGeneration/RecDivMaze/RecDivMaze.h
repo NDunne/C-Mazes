@@ -11,7 +11,7 @@ struct nodeContainer
 class RecDivMaze : public Maze
 {
 public:
-	RecDivMaze(SDL_Window* w);
+	RecDivMaze(SDL_Window* w, DrawPosition dp);
 
 protected:
 	void generate();

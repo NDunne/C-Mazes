@@ -19,23 +19,23 @@ MazeGenerator::~MazeGenerator()
 	delete currentMaze;
 }
 
-Maze* MazeGenerator::newMaze(MazeType t)
+Maze* MazeGenerator::newMaze(MazeType t, DrawPosition dp)
 {
 	if (t == PRIM)
 	{
-		currentMaze = new PrimMaze(window);
+		currentMaze = new PrimMaze(window, dp);
 	}
 	else if (t == KRUSKAL)
 	{
-		currentMaze = new KruskalMaze(window);
+		currentMaze = new KruskalMaze(window, dp);
 	}
 	else if (t == ALDBRO)
 	{
-		currentMaze = new AldousBroderMaze(window);
+		currentMaze = new AldousBroderMaze(window, dp);
 	}
 	else
 	{
-		currentMaze = new RecDivMaze(window);
+		currentMaze = new RecDivMaze(window, dp);
 	}
 
 	return currentMaze;

@@ -59,10 +59,15 @@ const int MAZE_PIXEL_HEIGHT = (Y_NODES * (boxLen + boxPad)) - boxPad;
 
 const int MAZE_PADDING = (2 + (2 * boxPad));
 
+const int MAZE_FRAME_WIDTH = MAZE_PIXEL_WIDTH + (2 * MAZE_PADDING);
+const int MAZE_FRAME_HEIGHT = MAZE_PIXEL_HEIGHT + (2 * MAZE_PADDING);
+
+enum DrawPosition { TL, TR, BL, BR };
+
 class Maze
 {
 public:
-	Maze(SDL_Window* w);
+	Maze(SDL_Window* w, DrawPosition dp);
 
 	static NodeCoord getAdjNode(int x, int y, direction dir, int dist = 1);
 	static NodeCoord getAdjNode(NodeCoord n, direction dir, int dist = 1) { return getAdjNode(n.first, n.second, dir, dist); }
@@ -97,7 +102,7 @@ protected:
 private:
 	bool add = true;
 
-	int hPadding;
+	int hPadding, vPadding;
 
 	nodeTypeMap mazeNodes;
 

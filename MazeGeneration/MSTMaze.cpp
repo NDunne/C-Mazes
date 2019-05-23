@@ -1,6 +1,6 @@
 #include "MSTMaze.h"
 
-MSTMaze::MSTMaze(SDL_Window* w) : Maze(w)
+MSTMaze::MSTMaze(SDL_Window* w, DrawPosition dp) : Maze(w, dp)
 {}
 
 void MSTMaze::addEdge(NodeCoord A, NodeCoord B)

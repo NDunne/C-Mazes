@@ -1,5 +1,5 @@
 #include "KruskalMaze.h"
-KruskalMaze::KruskalMaze(SDL_Window* w) :MSTMaze(w)
+KruskalMaze::KruskalMaze(SDL_Window* w, DrawPosition dp) :  MSTMaze(w, dp)
 {
 	color = green;
 	colorDif = blueSingle;

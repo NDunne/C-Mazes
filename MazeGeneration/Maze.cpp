@@ -1,6 +1,6 @@
 #include "Maze.h"
 
-Maze::Maze(SDL_Window* w)
+Maze::Maze(SDL_Window* w, DrawPosition dp)
 {
 	window = w;
 	surface = SDL_GetWindowSurface(window);
@@ -8,7 +8,8 @@ Maze::Maze(SDL_Window* w)
 	int trueWindowWidth;
 	SDL_GetWindowSize(window, &trueWindowWidth, nullptr);
 
-	hPadding = (trueWindowWidth - MAZE_PIXEL_WIDTH) / 2;
+	hPadding = MAZE_PADDING + ((dp == TR || dp == BR) ? MAZE_FRAME_WIDTH : 0);
+	vPadding = MAZE_PADDING + ((dp == BL || dp == BR) ? MAZE_FRAME_HEIGHT : 0);
 
 	drawSpeed = startSpeed;
 }
@@ -27,6 +28,7 @@ void Maze::setCellType(NodeCoord n, cellType type, bool update)
 
 void Maze::drawDelay()
 {
+	return;
 	if (drawSpeed > 5)
 	{
 		drawSpeed = (int) drawSpeed*0.95;
@@ -105,7 +107,7 @@ void Maze::drawCell(NodeCoord n, Uint32 colour, bool update)
 
 void Maze::drawCell(int x, int y, Uint32 colour, bool update)
 {
-	SDL_Rect rect = { hPadding + x * (boxLen + boxPad), MAZE_PADDING + y * (boxLen + boxPad), boxLen, boxLen };
+	SDL_Rect rect = { hPadding + x * (boxLen + boxPad), vPadding + y * (boxLen + boxPad), boxLen, boxLen };
 	SDL_FillRect(surface, &rect, colour);
 
 	if (update)
