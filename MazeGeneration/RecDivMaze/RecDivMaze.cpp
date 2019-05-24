@@ -21,7 +21,7 @@ void RecDivMaze::drawContainer(nodeContainer bounds)
 		}
 	}
 
-	SDL_UpdateWindowSurface(window);
+	//SDL_UpdateWindowSurface(window);
 }
 
 void RecDivMaze::drawBase()
@@ -42,7 +42,7 @@ void RecDivMaze::drawBase()
 	}
 
 	//Update the surface
-	SDL_UpdateWindowSurface(window);
+	//SDL_UpdateWindowSurface(window);
 }
 
 void RecDivMaze::generate()
@@ -176,7 +176,7 @@ void RecDivMaze::drawHWall(int x1, int x2, int y, int door, cellType type)
 			drawCell(i, y, color, false);
 		}
 	}
-	SDL_UpdateWindowSurface(window);
+	//SDL_UpdateWindowSurface(window);
 	drawDelay();
 
 	if (type == VALID)
@@ -193,7 +193,7 @@ void RecDivMaze::drawHWall(int x1, int x2, int y, int door, cellType type)
 				drawCell(i, y, color, false);
 			}
 		}
-		SDL_UpdateWindowSurface(window);
+		//SDL_UpdateWindowSurface(window);
 		drawDelay();
 	}
 	else if (type == INVALID)
@@ -202,7 +202,7 @@ void RecDivMaze::drawHWall(int x1, int x2, int y, int door, cellType type)
 		{
 			setCellType(i, y, UNVISITED, false);
 		}
-		SDL_UpdateWindowSurface(window);
+		//SDL_UpdateWindowSurface(window);
 		drawDelay();
 	}
 }
@@ -252,7 +252,7 @@ void RecDivMaze::drawVWall(int x, int y1, int y2, int door, cellType type)
 			drawCell(x, i, color, false);
 		}
 	}
-	SDL_UpdateWindowSurface(window);
+	//SDL_UpdateWindowSurface(window);
 	drawDelay();
 	
 	if (type == VALID)
@@ -269,7 +269,7 @@ void RecDivMaze::drawVWall(int x, int y1, int y2, int door, cellType type)
 				drawCell(x, i, color, false);
 			}
 		}
-		SDL_UpdateWindowSurface(window);
+		//SDL_UpdateWindowSurface(window);
 		drawDelay();
 	}
 	else if (type == INVALID)
@@ -278,7 +278,7 @@ void RecDivMaze::drawVWall(int x, int y1, int y2, int door, cellType type)
 		{
 			setCellType(x, i, UNVISITED, false);
 		}
-		SDL_UpdateWindowSurface(window);
+		//SDL_UpdateWindowSurface(window);
 		drawDelay();
 	}
 }

@@ -91,17 +91,12 @@ int main(int argc, char** argv)
 	std::thread t3(generate, m3);
 	std::thread t4(generate, m4);
 
-	t1.join();
-	t2.join();
-	t3.join();
-	t4.join();
-
-	std::cout << "done";
-
 	SDL_Event e;
 
 	while (!quit)
 	{
+		SDL_UpdateWindowSurface(window);
+		SDL_Delay(16);
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT)
@@ -110,6 +105,13 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+
+	std::cout << "done";
 
 	delete m1;
 	delete m2;

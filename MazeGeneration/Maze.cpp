@@ -51,7 +51,7 @@ void Maze::drawBase()
 	}
 
 	//Update the surface
-	SDL_UpdateWindowSurface(window);
+	////SDL_UpdateWindowSurface(window);
 }
 
 void Maze::nextColor()
@@ -118,7 +118,7 @@ void Maze::drawCell(int x, int y, Uint32 colour, bool update)
 
 	if (update)
 	{
-		SDL_UpdateWindowSurface(window);
+		////SDL_UpdateWindowSurface(window);
 	}
 }
 
@@ -168,5 +168,5 @@ void Maze::finish()
 			if (getCellType({i,j}).type == UNVISITED) drawCell(i, j, UNVISITED, false);
 		}
 	}
-	SDL_UpdateWindowSurface(window);
+	////SDL_UpdateWindowSurface(window);
 }
