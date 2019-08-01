@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\MSTMaze.h"
+#include "MSTMaze.h"
 
 class PrimMaze : public MSTMaze
 {

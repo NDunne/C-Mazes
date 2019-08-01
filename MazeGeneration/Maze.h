@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SDL.h"
+#include <SDL2/SDL.h>
 
 #include <iterator>
 #include <iostream>
@@ -13,7 +13,7 @@
 #include <chrono>
 #include <map>
 
-const enum cellType : Uint32 
+enum cellType : Uint32 
 { 
 	WALL = 0x0, 
 	UNVISITED = 0xF0F0F0,

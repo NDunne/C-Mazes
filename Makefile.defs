@@ -1,0 +1,8 @@
+#Compiler
+CC = g++
+
+#Compiler flags
+COMPILER_FLAGS = -w
+
+#Linker flags (libraries to link against)
+LINKER_FLAGS = -lSDL2 -lpthread

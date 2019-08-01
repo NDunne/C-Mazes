@@ -1,13 +1,15 @@
 //Using SDL and standard IO
 #define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+
+#include <SDL2/SDL.h>
+//#include <stdlib.h>
+//#include <crtdbg.h>
 
 #include <thread>
 
 #include <iostream>
 
-#include "MazeGeneration\MazeGenerator.h"
+#include "MazeGenerator.h"
 
 /*
 TODO

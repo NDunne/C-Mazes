@@ -1,5 +1,5 @@
 #pragma once
-#include "..\Maze.h"
+#include "Maze.h"
 struct nodeContainer
 {
 	int xStart;

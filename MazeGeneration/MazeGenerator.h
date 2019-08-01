@@ -1,12 +1,12 @@
 #pragma once
 
-#include "PrimMaze\PrimMaze.h"
+#include "PrimMaze.h"
 
-#include "KruskalMaze\KruskalMaze.h"
+#include "KruskalMaze.h"
 
-#include "RecDivMaze\RecDivMaze.h"
+#include "RecDivMaze.h"
 
-#include "AldousBroderMaze\AldousBroderMaze.h"
+#include "AldousBroderMaze.h"
 
 enum MazeType { PRIM, KRUSKAL, RECDIV, ALDBRO };
 
